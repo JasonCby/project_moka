@@ -7,7 +7,7 @@ from torch_geometric.transforms import NormalizeFeatures
 dataset_pubmed = Planetoid(root='./pubmed/', name='Pubmed')
 
 
-dataset_Reddit = Reddit(root='./reddit/')
+# dataset_Reddit = Reddit(root='./reddit/')
 # dataset_Reddit2 = Reddit2(root='./reddit2/')
 # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
 # dataset_wiki = WikiCS(root='./WikiCS/')
