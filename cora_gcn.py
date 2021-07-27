@@ -15,7 +15,7 @@ import numpy as np
 # from pmem
 #path = "/mnt/mem/cora/"
 # form ram
-path = "data/cora/"
+path = "data/Cora/"
 cites = path + "cora.cites"
 content = path + "cora.content"
 
