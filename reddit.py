@@ -102,7 +102,7 @@ class GCNNet(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-from IPython.display import Javascript, display
+#from IPython.display import Javascript, display
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 device = torch.device('cpu')
