@@ -116,7 +116,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 model.train()
 mean_time = 0
 total_time = 0
-times = 1
+times = 10
 epoch_num = 10
 
 for _ in range(times):
@@ -134,8 +134,8 @@ for _ in range(times):
             loss = F.nll_loss(out[data.train_mask], data.y[data.train_mask])
             loss.backward()
             optimizer.step()
-            print("Epoch:" + str(epoch) + ". Batch: " + str(batch_round) + ".")
-    print("Epoch " + str(epoch_num) + " Done!")
+            #print("Epoch:" + str(epoch) + ". Batch: " + str(batch_round) + ".")
+    #print("Epoch " + str(epoch_num) + " Done!")
     # stop timer
     end = time.perf_counter()
     # output duration
