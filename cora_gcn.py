@@ -109,6 +109,7 @@ train_mask = mask[:140]
 val_mask = mask[140:640]
 test_mask = mask[1708:2708]
 
+#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 device = torch.device('cpu')
 
 cora = Data(x=features, edge_index=edge_index.t().contiguous(), y=labels).to(device)
