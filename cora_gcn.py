@@ -13,9 +13,9 @@ import numpy as np
 # import matplotlib.pyplot as plt
 
 # from pmem
-#path = "/mnt/mem/cora/"
+path = "/mnt/mem/python/project_moka/Cora/"
 # form ram
-path = "data/Cora/"
+#path = "data/Cora/"
 cites = path + "cora.cites"
 content = path + "cora.content"
 

@@ -35,7 +35,7 @@ print(f'Contains self-loops: {data.contains_self_loops()}')
 
 from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
-torch.manual_seed(12345)
+torch.manual_seed(23122)
 cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
 train_loader = ClusterLoader(cluster_data, batch_size=4, shuffle=True)  # 2. Stochastic partioning scheme.
 
