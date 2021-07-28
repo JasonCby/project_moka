@@ -119,7 +119,7 @@ model = GATNet(features.shape[1], len(label_to_index)).to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 mean_time = 0
 total_time = 0
-times = 10
+times = 30
 
 for _ in range(times):
 
