@@ -1,5 +1,6 @@
 import time
 
+import networkx as nx
 import torch
 from torch_geometric.datasets import Planetoid, WikiCS, ShapeNet, Reddit, Reddit2, CoMA, AmazonProducts
 from torch_geometric.transforms import NormalizeFeatures
@@ -37,7 +38,7 @@ from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
 torch.manual_seed(23122)
 cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
-train_loader = ClusterLoader(cluster_data, batch_size=4, shuffle=True)  # 2. Stochastic partioning scheme.
+train_loader = ClusterLoader(cluster_data, batch_size=16, shuffle=True)  # 2. Stochastic partioning scheme.
 
 print()
 total_num_nodes = 0
@@ -102,29 +103,33 @@ class GCNNet(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-#from IPython.display import Javascript, display
+
+# from IPython.display import Javascript, display
 
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 device = torch.device('cpu')
+# device = torch.device('cuda')
 #
-model = SAGEConvNet().to(device)
+
+
+model = GCNNet().to(device)
 #
 data = dataset[0].to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 
-
 model.train()
 mean_time = 0
 total_time = 0
-times = 10
-epoch_num = 10
+times = 3
+epoch_num = 20
 
 for _ in range(times):
 
     # start timer
     start = time.perf_counter()
     for epoch in range(epoch_num):
-        print("Epoch:" + str(epoch))
+        if epoch % 5 == 0:
+            print("Epoch:" + str(epoch))
         batch_round = 0
         for train_data in train_loader:
             batch_round += 1
@@ -134,8 +139,8 @@ for _ in range(times):
             loss = F.nll_loss(out[data.train_mask], data.y[data.train_mask])
             loss.backward()
             optimizer.step()
-            #print("Epoch:" + str(epoch) + ". Batch: " + str(batch_round) + ".")
-    #print("Epoch " + str(epoch_num) + " Done!")
+            # print("Epoch:" + str(epoch) + ". Batch: " + str(batch_round) + ".")
+    # print("Epoch " + str(epoch_num) + " Done!")
     # stop timer
     end = time.perf_counter()
     # output duration
