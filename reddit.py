@@ -4,7 +4,7 @@ import networkx as nx
 import torch
 from torch_geometric.datasets import Planetoid, WikiCS, ShapeNet, Reddit, Reddit2, CoMA, AmazonProducts
 from torch_geometric.transforms import NormalizeFeatures
-total_times = 5
+total_times = 4
 for _ in range(total_times):
     # start timer
     start = time.perf_counter()
