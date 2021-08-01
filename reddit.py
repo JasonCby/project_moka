@@ -41,7 +41,7 @@ for _ in range(total_times):
     random_int = random.randint(10000, 29999)
     torch.manual_seed(12345)
     cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
-    train_loader = ClusterLoader(cluster_data, batch_size=16, shuffle=False)  # 2. Stochastic partioning scheme.
+    train_loader = ClusterLoader(cluster_data, batch_size=32, shuffle=True)  # 2. Stochastic partioning scheme.
 
     print()
     total_num_nodes = 0
