@@ -119,13 +119,13 @@ model = GATNet(features.shape[1], len(label_to_index)).to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 mean_time = 0
 total_time = 0
-times = 30
+times = 3
 
 for _ in range(times):
 
     # start timer
     start = time.perf_counter()
-    for epoch in range(200):
+    for epoch in range(50):
         optimizer.zero_grad()
         out = model(cora)
         loss = F.nll_loss(out[train_mask], cora.y[train_mask])
