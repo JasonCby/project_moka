@@ -25,7 +25,7 @@ for _ in range(total_times):
     data = dataset[0]  # Get the first graph object.
 
     #print(data)
-    print('===============================================================================================================')
+    #print('===============================================================================================================')
 
     # Gather some statistics about the graph.
     '''print(f'Number of nodes: {data.num_nodes}')
@@ -131,8 +131,8 @@ for _ in range(total_times):
         # start timer
         # start = time.perf_counter()
         for epoch in range(epoch_num):
-            if epoch % 5 == 0:
-                print("Epoch:" + str(epoch))
+            #if epoch % 5 == 0:
+                #print("Epoch:" + str(epoch))
             batch_round = 0
             for train_data in train_loader:
                 batch_round += 1
