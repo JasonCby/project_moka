@@ -5,6 +5,8 @@ import torch
 from torch_geometric.datasets import Planetoid, WikiCS, ShapeNet, Reddit, Reddit2, CoMA, AmazonProducts
 from torch_geometric.transforms import NormalizeFeatures
 
+# start timer
+start = time.perf_counter()
 dataset_pubmed = Planetoid(root='./pubmed/', name='Pubmed')
 
 
@@ -120,13 +122,13 @@ optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 model.train()
 mean_time = 0
 total_time = 0
-times = 3
-epoch_num = 20
+times = 1
+epoch_num = 50
 
 for _ in range(times):
 
     # start timer
-    start = time.perf_counter()
+    # start = time.perf_counter()
     for epoch in range(epoch_num):
         if epoch % 5 == 0:
             print("Epoch:" + str(epoch))
