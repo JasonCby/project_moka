@@ -94,6 +94,7 @@ class GATNet(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
+
 seed = 1234
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
