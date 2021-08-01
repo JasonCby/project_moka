@@ -1,5 +1,5 @@
 import time
-
+import random
 import networkx as nx
 import torch
 from torch_geometric.datasets import Planetoid, WikiCS, ShapeNet, Reddit, Reddit2, CoMA, AmazonProducts
@@ -38,8 +38,8 @@ for _ in range(total_times):
     # print(f'Is undirected: {data.is_undirected()}')
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
-
-    torch.manual_seed(23122)
+    random_int = random.randint(10000, 29999)
+    torch.manual_seed(random_int)
     cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
     train_loader = ClusterLoader(cluster_data, batch_size=16, shuffle=True)  # 2. Stochastic partioning scheme.
 
