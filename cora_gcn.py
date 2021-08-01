@@ -15,7 +15,7 @@ import numpy as np
 # from pmem
 path = "/mnt/mem/project_moka/data/Cora/"
 # form ram
-# path = "data/Cora/"
+path = "data/Cora/"
 cites = path + "cora.cites"
 content = path + "cora.content"
 
