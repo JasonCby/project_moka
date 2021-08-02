@@ -13,9 +13,9 @@ import numpy as np
 # import matplotlib.pyplot as plt
 
 # from pmem
-path = "/mnt/mem/python/project_moka/data/Cora/"
+#path = "/mnt/mem/python/project_moka/data/Cora/"
 # form ram
-#path = "data/Cora/"
+path = "data/Cora/"
 cites = path + "cora.cites"
 content = path + "cora.content"
 
@@ -27,7 +27,8 @@ label_to_index = dict()
 features = []
 labels = []
 edge_index = []
-
+# start timer
+start_time = time.perf_counter()
 with open(content, "r") as f:
     nodes = f.readlines()
     for node in nodes:
@@ -119,12 +120,11 @@ model = GATNet(features.shape[1], len(label_to_index)).to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 mean_time = 0
 total_time = 0
-times = 10
+times = 1
 
 for _ in range(times):
 
-    # start timer
-    start = time.perf_counter()
+    mid = time.perf_counter()
     for epoch in range(200):
         optimizer.zero_grad()
         out = model(cora)
@@ -143,8 +143,10 @@ for _ in range(times):
     # stop timer
     end = time.perf_counter()
     # output duration
-    duration = end - start
+    duration = end - start_time
     print('Running time: %s Seconds' % duration)
+    print('Running 2nd time: %s Seconds' % (end - mid))
+    print('Difference: %s Seconds' % (mid - start_time))
     total_time += duration
 mean_time = total_time/times
 print('Mean running time: %s Seconds' % mean_time)
