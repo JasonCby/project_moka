@@ -13,9 +13,9 @@ import numpy as np
 # import matplotlib.pyplot as plt
 
 # from pmem
-path = "/mnt/mem/project_moka/data/Cora/"
+path = "/mnt/mem/python/project_moka/data/Cora/"
 # form ram
-path = "data/Cora/"
+#path = "data/Cora/"
 cites = path + "cora.cites"
 content = path + "cora.content"
 
@@ -94,7 +94,6 @@ class GATNet(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-
 seed = 1234
 torch.manual_seed(seed)
 torch.cuda.manual_seed(seed)
@@ -120,13 +119,13 @@ model = GATNet(features.shape[1], len(label_to_index)).to(device)
 optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
 mean_time = 0
 total_time = 0
-times = 3
+times = 10
 
 for _ in range(times):
 
     # start timer
     start = time.perf_counter()
-    for epoch in range(50):
+    for epoch in range(200):
         optimizer.zero_grad()
         out = model(cora)
         loss = F.nll_loss(out[train_mask], cora.y[train_mask])
