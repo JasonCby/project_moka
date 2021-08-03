@@ -1,7 +1,7 @@
 import os
 import os.path as osp
 import time
-import os, mmap
+
 import torch
 from torch_geometric.data import Data
 import torch.nn.functional as F
@@ -13,12 +13,13 @@ import numpy as np
 # import matplotlib.pyplot as plt
 
 # from pmem
-#path = "/mnt/mem/python/project_moka/data/Cora/"
+path = "/media/yu/28f2da49-2f4d-40a1-9770-f5533eca7e96/project_moka/data/Cora/"
 # form ram
 path = "data/Cora/"
 cites = path + "cora.cites"
 content = path + "cora.content"
-
+# start timer
+ori = time.perf_counter()
 # 索引字典，将原本的论文id转换到从0开始编码
 index_dict = dict()
 # 标签字典，将字符串标签转化为数值
@@ -27,24 +28,13 @@ label_to_index = dict()
 features = []
 labels = []
 edge_index = []
-# start timer
-start_time = time.perf_counter()
 
-
-with mmap.mmap(os.open(content, os.O_RDWR), 0) as f:
-    nodes = []
-    while True:
-        text_line = f.readline().decode().strip()
-        if text_line:
-            nodes.append(text_line)
-        else:
-            break
+with open(content, "r") as f:
+    nodes = f.readlines()
     print(nodes[0])
     print(len(nodes))
-    #nodes = f.readlines()
     for node in nodes:
         node_info = node.split()
-        #print(node_info[0])
         index_dict[int(node_info[0])] = len(index_dict)
         features.append([int(i) for i in node_info[1:-1]])
 
@@ -53,14 +43,8 @@ with mmap.mmap(os.open(content, os.O_RDWR), 0) as f:
             label_to_index[label_str] = len(label_to_index)
         labels.append(label_to_index[label_str])
 
-with mmap.mmap(os.open(cites, os.O_RDWR), 0) as f:
-    edges = []
-    while True:
-        text_line = f.readline().decode().strip()
-        if text_line:
-            edges.append(text_line)
-        else:
-            break
+with open(cites, "r") as f:
+    edges = f.readlines()
     for edge in edges:
         start, end = edge.split()
         # 训练时将边视为无向的，但原本的边是有向的，因此需要正反添加两次
@@ -128,7 +112,7 @@ train_mask = mask[:140]
 val_mask = mask[140:640]
 test_mask = mask[1708:2708]
 
-#device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
+device = torch.device('cuda:0' if torch.cuda.is_available() else 'cpu')
 device = torch.device('cpu')
 
 cora = Data(x=features, edge_index=edge_index.t().contiguous(), y=labels).to(device)
@@ -142,8 +126,9 @@ times = 1
 
 for _ in range(times):
 
-    mid = time.perf_counter()
-    for epoch in range(200):
+    # start timer
+    start = time.perf_counter()
+    for epoch in range(50):
         optimizer.zero_grad()
         out = model(cora)
         loss = F.nll_loss(out[train_mask], cora.y[train_mask])
@@ -161,10 +146,10 @@ for _ in range(times):
     # stop timer
     end = time.perf_counter()
     # output duration
-    duration = end - start_time
+    duration = end - start
+    duration2 = end - ori
     print('Running time: %s Seconds' % duration)
-    print('Running 2nd time: %s Seconds' % (end - mid))
-    print('Difference: %s Seconds' % (mid - start_time))
+    print('Total time: %s Seconds' % duration2)
     total_time += duration
 mean_time = total_time/times
 print('Mean running time: %s Seconds' % mean_time)
