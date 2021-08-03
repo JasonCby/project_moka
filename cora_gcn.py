@@ -30,7 +30,6 @@ edge_index = []
 # start timer
 start_time = time.perf_counter()
 
-
 with mmap.mmap(os.open(content, os.O_RDWR), 0) as f:
     nodes = []
     while True:
