@@ -6,11 +6,13 @@ from torch_geometric.datasets import Planetoid, WikiCS, ShapeNet, Reddit, Reddit
 from torch_geometric.transforms import NormalizeFeatures
 total_times = 4
 for _ in range(total_times):
-    # start timer
-    start = time.perf_counter()
+    ori = start = time.perf_counter()
+
+
     dataset_pubmed = Planetoid(root='./pubmed/', name='Pubmed')
 
-
+    # start timer
+    start = time.perf_counter()
     # dataset_Reddit = Reddit(root='./reddit/')
     # dataset_Reddit2 = Reddit2(root='./reddit2/')
     # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
@@ -41,7 +43,7 @@ for _ in range(total_times):
     random_int = random.randint(10000, 29999)
     torch.manual_seed(12345)
     cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
-    train_loader = ClusterLoader(cluster_data, batch_size=32, shuffle=True)  # 2. Stochastic partioning scheme.
+    train_loader = ClusterLoader(cluster_data, batch_size=256, shuffle=True)  # 2. Stochastic partioning scheme.
 
     print()
     total_num_nodes = 0
@@ -147,12 +149,14 @@ for _ in range(total_times):
         # stop timer
         end = time.perf_counter()
         # output duration
+        whole_time = end - ori
         duration = end - start
         duration2 = end - mid
-        duration_rd = start - mid
-        print('Running time: %s Seconds' % duration)
-        print('Running time (without reading files): %s Seconds' % duration2)
-        print('Running time: %s Seconds' % duration_rd)
+        duration_rd = mid - start
+        print('Total time: %s Seconds' % whole_time)
+        print('Running time (without reading files): %s Seconds' % duration)
+        print('Running time (only training time): %s Seconds' % duration2)
+        print('Reading file and dataloader time: %s Seconds' % duration_rd)
         model.eval()
         _, pred = model(data).max(dim=1)
         correct = int(pred[data.test_mask].eq(data.y[data.test_mask]).sum().item())
