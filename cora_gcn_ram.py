@@ -30,9 +30,13 @@ labels = []
 edge_index = []
 
 with open(content, "r") as f:
-    nodes = f.readlines()
-    print(nodes[0])
-    print(len(nodes))
+    nodes = []
+    while True:
+        text_line = f.readline()
+        if text_line:
+            nodes.append(text_line)
+        else:
+            break
     for node in nodes:
         node_info = node.split()
         index_dict[int(node_info[0])] = len(index_dict)
@@ -44,7 +48,13 @@ with open(content, "r") as f:
         labels.append(label_to_index[label_str])
 
 with open(cites, "r") as f:
-    edges = f.readlines()
+    edges = []
+    while True:
+        text_line = f.readline()
+        if text_line:
+            edges.append(text_line)
+        else:
+            break
     for edge in edges:
         start, end = edge.split()
         # 训练时将边视为无向的，但原本的边是有向的，因此需要正反添加两次
