@@ -61,11 +61,14 @@ class GCNNet(torch.nn.Module):
 
 
 for _ in range(times):
-
+    # start timer
+    start = time.perf_counter()
 
 
     dataset_pubmed = Planetoid(root=path, name='Pubmed')
 
+    #
+    after = time.perf_counter()
     # dataset_Reddit = Reddit(root='./reddit/')
     # dataset_Reddit2 = Reddit2(root='./reddit2/')
     # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
@@ -124,8 +127,7 @@ for _ in range(times):
     data = dataset[0].to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
     model.train()
-    # start timer
-    start = time.perf_counter()
+
 
     for epoch in range(epoch_num):
         #print("Epoch:" + str(epoch))
@@ -144,6 +146,8 @@ for _ in range(times):
     end = time.perf_counter()
     # output duration
     duration = end - start
+    file_reading = after - start
+    print('Reading time: %s Seconds' % file_reading)
     print('Running time: %s Seconds' % duration)
 
     model.eval()
