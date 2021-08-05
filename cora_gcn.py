@@ -16,6 +16,7 @@ import numpy as np
 #path = "/mnt/mem/python/project_moka/data/Cora/"
 # form ram
 path = "data/Cora/"
+#path = "/dev/pmem0"
 cites = path + "cora.cites"
 content = path + "cora.content"
 
@@ -29,8 +30,9 @@ labels = []
 edge_index = []
 # start timer
 start_time = time.perf_counter()
+fd = os.open(content, os.O_RDWR)
 
-with mmap.mmap(os.open(content, os.O_RDWR), 0) as f:
+with mmap.mmap(fd, 0) as f:
     nodes = []
     while True:
         text_line = f.readline().decode().strip()

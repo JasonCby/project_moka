@@ -24,21 +24,16 @@ labels = []
 edge_index = []
 # start timer
 start_time = time.perf_counter()
+fd = open(path, "r")
+fd_o = os.open(path, os.O_RDONLY)
+print(fd)
+m = mmap.mmap(fd, 0)
+print(fd_o)
+with open(path, "r") as f:
 
-with mmap.mmap(os.open(path, os.O_RDONLY), 0) as f:
-    nodes = []
-    while True:
-        text_line = f.readline().decode().strip()
-        if text_line:
-            nodes.append(text_line)
-        else:
-            break
-    print(nodes[0])
-    print(len(nodes))
-    #nodes = f.readlines()
+    nodes = f.readlines()
     for node in nodes:
         node_info = node.split()
-        #print(node_info[0])
         index_dict[int(node_info[0])] = len(index_dict)
         features.append([int(i) for i in node_info[1:-1]])
 
@@ -46,3 +41,11 @@ with mmap.mmap(os.open(path, os.O_RDONLY), 0) as f:
         if (label_str not in label_to_index.keys()):
             label_to_index[label_str] = len(label_to_index)
         labels.append(label_to_index[label_str])
+
+with open(path,"r") as f:
+    edges = f.readlines()
+    for edge in edges:
+        start, end = edge.split()
+        # 训练时将边视为无向的，但原本的边是有向的，因此需要正反添加两次
+        edge_index.append([index_dict[int(start)], index_dict[int(end)]])
+        edge_index.append([index_dict[int(end)], index_dict[int(start)]])
