@@ -53,6 +53,9 @@ with open(cites, "r") as f:
         # 训练时将边视为无向的，但原本的边是有向的，因此需要正反添加两次
         edge_index.append([index_dict[int(start)], index_dict[int(end)]])
         edge_index.append([index_dict[int(end)], index_dict[int(start)]])
+
+after = time.perf_counter()
+
 for _ in range(times):
     # start timer
     start_t = time.perf_counter()
@@ -62,7 +65,7 @@ for _ in range(times):
     # for i in range(2708):
     #     edge_index.append([i,i])
 
-    after = time.perf_counter()
+
     # 转换为Tensor
     labels = torch.LongTensor(labels)
     features = torch.FloatTensor(features)
