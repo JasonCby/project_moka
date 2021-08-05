@@ -150,8 +150,8 @@ for _ in range(times):
     _, pred = model(data).max(dim=1)
     correct = int(pred[data.test_mask].eq(data.y[data.test_mask]).sum().item())
     acc = correct / int(data.test_mask.sum())
-    print('Accuracy:{:.4f}'.format(acc))
+    #print('Accuracy:{:.4f}'.format(acc))
     total_time += duration
 
 mean_time = total_time / times
-print('Mean running time: %s Seconds' % mean_time)
+#print('Mean running time: %s Seconds' % mean_time)
