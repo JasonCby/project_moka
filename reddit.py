@@ -60,17 +60,12 @@ class GCNNet(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-dataset_pubmed = Planetoid(root=path, name='Pubmed')
+
 
 for _ in range(times):
     # start timer
     start = time.perf_counter()
-
-
-
-
-    #
-    after = time.perf_counter()
+    dataset_pubmed = Planetoid(root=path, name='Pubmed')
     # dataset_Reddit = Reddit(root='./reddit/')
     # dataset_Reddit2 = Reddit2(root='./reddit2/')
     # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
@@ -113,7 +108,8 @@ for _ in range(times):
         #print(sub_data)
         #print()
         total_num_nodes += sub_data.num_nodes
-
+    # start timer
+    after = time.perf_counter()
     #print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
 
     import torch.nn.functional as F
