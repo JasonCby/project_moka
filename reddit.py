@@ -7,7 +7,7 @@ from torch_geometric.transforms import NormalizeFeatures
 #path = "/mnt/mem/project_moka/pubmed/"
 #path = "/mnt/tmpfs/project_moka/pubmed/"
 path = "/mnt/ext4ramdisk/project_moka/pubmed/"
-#path = "./pubmed/"
+path = "./pubmed/"
 times = 1
 total_time = 0
 batch_size = 32
@@ -61,12 +61,12 @@ class GCNNet(torch.nn.Module):
 
 
 for _ in range(times):
-    # start timer
-    start = time.perf_counter()
+
 
 
     dataset_pubmed = Planetoid(root=path, name='Pubmed')
-
+    # start timer
+    start = time.perf_counter()
     # dataset_Reddit = Reddit(root='./reddit/')
     # dataset_Reddit2 = Reddit2(root='./reddit2/')
     # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
