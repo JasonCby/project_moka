@@ -21,7 +21,7 @@ for _ in range(times):
     #path = "/mnt/tmpfs/project_moka/data/Cora/"
     #path = "/mnt/ramdisk/project_moka/data/Cora/"
     # form ram
-    #path = "data/Cora/"
+    path = "data/Cora/"
     cites = path + "cora.cites"
     content = path + "cora.content"
     # start timer
@@ -60,6 +60,7 @@ for _ in range(times):
     # for i in range(2708):
     #     edge_index.append([i,i])
 
+    after = time.perf_counter()
     # 转换为Tensor
     labels = torch.LongTensor(labels)
     features = torch.FloatTensor(features)
@@ -144,6 +145,8 @@ for _ in range(times):
     end = time.perf_counter()
     # output duration
     duration = end - start_t
+    reading = after - start_t
+    print('Reading time: %s Seconds' % reading)
     print('Running time: %s Seconds' % duration)
     total_time += duration
 mean_time = total_time/times
