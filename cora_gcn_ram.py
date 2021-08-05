@@ -14,7 +14,7 @@ import numpy as np
 times = 5
 for _ in range(times):
     # start timer
-    start = time.perf_counter()
+    start_t = time.perf_counter()
     # from pmem
     path = "/mnt/mem/project_moka/data/Cora/"
     path = "/mnt/tmpfs/project_moka/data/Cora/"
@@ -23,7 +23,6 @@ for _ in range(times):
     cites = path + "cora.cites"
     content = path + "cora.content"
     # start timer
-    ori = time.perf_counter()
     # 索引字典，将原本的论文id转换到从0开始编码
     index_dict = dict()
     # 标签字典，将字符串标签转化为数值
@@ -35,8 +34,8 @@ for _ in range(times):
 
     with open(content, "r") as f:
         nodes = f.readlines()
-        print(nodes[0])
-        print(len(nodes))
+        #print(nodes[0])
+        #print(len(nodes))
         for node in nodes:
             node_info = node.split()
             index_dict[int(node_info[0])] = len(index_dict)
@@ -149,10 +148,8 @@ for _ in range(times):
     # stop timer
     end = time.perf_counter()
     # output duration
-    duration = end - start
-    duration2 = end - ori
+    duration = end - start_t
     print('Running time: %s Seconds' % duration)
-    print('Total time: %s Seconds' % duration2)
     total_time += duration
 mean_time = total_time/times
 print('Mean running time: %s Seconds' % mean_time)
