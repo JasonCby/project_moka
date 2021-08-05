@@ -62,10 +62,10 @@ class GCNNet(torch.nn.Module):
 
 for _ in range(times):
     # start timer
-    start = time.perf_counter()
+
 
     dataset_pubmed = Planetoid(root=path, name='Pubmed')
-
+    start = time.perf_counter()
     # dataset_Reddit = Reddit(root='./reddit/')
     # dataset_Reddit2 = Reddit2(root='./reddit2/')
     # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
