@@ -11,7 +11,7 @@ from sklearn.manifold import TSNE
 import numpy as np
 
 # import matplotlib.pyplot as plt
-times = 5
+times = 4
 total_time = 0
 for _ in range(times):
     # start timer
