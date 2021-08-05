@@ -4,9 +4,9 @@ import torch
 from torch_geometric.datasets import Planetoid, WikiCS, ShapeNet, Reddit, Reddit2, CoMA, AmazonProducts
 from torch_geometric.transforms import NormalizeFeatures
 
-path = "/mnt/mem/project_moka/pubmed/"
+#path = "/mnt/mem/project_moka/pubmed/"
 #path = "/mnt/tmpfs/project_moka/pubmed/"
-#path = "/mnt/ext4ramdisk/project_moka/pubmed/"
+path = "/mnt/ext4ramdisk/project_moka/pubmed/"
 #path = "./pubmed/"
 times = 10
 total_time = 0
