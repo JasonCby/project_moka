@@ -7,10 +7,10 @@ from torch_geometric.transforms import NormalizeFeatures
 path = "/mnt/mem/project_moka/pubmed/"
 # path = "/mnt/tmpfs/project_moka/pubmed/"
 # path = "/mnt/ramdisk/project_moka/pubmed/"
-#path = "./pubmed/"
+path = "./pubmed/"
 times = 1
 total_time = 0
-batch_size = 16
+batch_size = 32
 epoch_num = 10
 
 class GATNet(torch.nn.Module):
@@ -119,7 +119,7 @@ for _ in range(times):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     device = torch.device('cpu')
     #
-    model = SAGEConvNet().to(device)
+    model = GCNNet().to(device)
     #
     data = dataset[0].to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
@@ -127,7 +127,7 @@ for _ in range(times):
 
 
     for epoch in range(epoch_num):
-        print("Epoch:" + str(epoch))
+        #print("Epoch:" + str(epoch))
         batch_round = 0
         for train_data in train_loader:
             batch_round += 1
