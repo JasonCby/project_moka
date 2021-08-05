@@ -19,7 +19,7 @@ for _ in range(times):
     # from pmem
     path = "/mnt/mem/project_moka/data/Cora/"
     #path = "/mnt/tmpfs/project_moka/data/Cora/"
-    #path = "/mnt/ramdisk/project_moka/data/Cora/"
+    path = "/mnt/ramdisk/project_moka/data/Cora/"
     # form ram
     #path = "data/Cora/"
     cites = path + "cora.cites"
