@@ -32,6 +32,8 @@ features = []
 labels = []
 edge_index = []
 
+before = time.perf_counter()
+
 with open(content, "r") as f:
     nodes = f.readlines()
     # print(nodes[0])
@@ -55,6 +57,7 @@ with open(cites, "r") as f:
         edge_index.append([index_dict[int(end)], index_dict[int(start)]])
 
 after = time.perf_counter()
+print('Reading time: %s Seconds' % (after - before))
 
 for _ in range(times):
     # start timer
@@ -151,7 +154,7 @@ for _ in range(times):
     # output duration
     duration = end - start_t
     reading = after - start_t
-    print('Reading time: %s Seconds' % reading)
+
     print('Running time: %s Seconds' % duration)
     total_time += duration
 mean_time = total_time/times
