@@ -8,7 +8,7 @@ from torch_geometric.transforms import NormalizeFeatures
 #path = "/mnt/tmpfs/project_moka/pubmed/"
 path = "/mnt/ext4ramdisk/project_moka/pubmed/"
 #path = "./pubmed/"
-times = 10
+times = 1
 total_time = 0
 batch_size = 32
 epoch_num = 10
