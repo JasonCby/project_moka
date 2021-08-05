@@ -21,7 +21,7 @@ for _ in range(times):
     #path = "/mnt/tmpfs/project_moka/data/Cora/"
     #path = "/mnt/ramdisk/project_moka/data/Cora/"
     # form ram
-    path = "data/Cora/"
+    #path = "data/Cora/"
     cites = path + "cora.cites"
     content = path + "cora.content"
     # start timer
