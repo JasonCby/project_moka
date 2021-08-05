@@ -4,56 +4,14 @@ import torch
 from torch_geometric.datasets import Planetoid, WikiCS, ShapeNet, Reddit, Reddit2, CoMA, AmazonProducts
 from torch_geometric.transforms import NormalizeFeatures
 
-dataset_pubmed = Planetoid(root='./pubmed/', name='Pubmed')
-
-
-# dataset_Reddit = Reddit(root='./reddit/')
-# dataset_Reddit2 = Reddit2(root='./reddit2/')
-# dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
-# dataset_wiki = WikiCS(root='./WikiCS/')
-dataset = dataset_pubmed
-print(f'Dataset: {dataset}:')
-print('==================')
-print(f'Number of graphs: {len(dataset)}')
-print(f'Number of features: {dataset.num_features}')
-print(f'Number of classes: {dataset.num_classes}')
-
-data = dataset[0]  # Get the first graph object.
-
-print(data)
-print('===============================================================================================================')
-
-# Gather some statistics about the graph.
-print(f'Number of nodes: {data.num_nodes}')
-print(f'Number of edges: {data.num_edges}')
-print(f'Average node degree: {data.num_edges / data.num_nodes:.2f}')
-print(f'Number of training nodes: {data.train_mask.sum()}')
-print(f'Training node label rate: {int(data.train_mask.sum()) / data.num_nodes:.3f}')
-print(f'Contains isolated nodes: {data.contains_isolated_nodes()}')
-print(f'Contains self-loops: {data.contains_self_loops()}')
-# print(f'Is undirected: {data.is_undirected()}')
-
-from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
-
-torch.manual_seed(23122)
-cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
-train_loader = ClusterLoader(cluster_data, batch_size=4, shuffle=True)  # 2. Stochastic partioning scheme.
-
-print()
-total_num_nodes = 0
-for step, sub_data in enumerate(train_loader):
-    print(f'Step {step + 1}:')
-    print('=======')
-    print(f'Number of nodes in the current batch: {sub_data.num_nodes}')
-    print(sub_data)
-    print()
-    total_num_nodes += sub_data.num_nodes
-
-print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
-
-import torch.nn.functional as F
-from torch_geometric.nn import GCNConv, SAGEConv, GATConv
-
+path = "/mnt/mem/project_moka/pubmed/"
+# path = "/mnt/tmpfs/project_moka/pubmed/"
+# path = "/mnt/ramdisk/project_moka/pubmed/"
+#path = "./pubmed/"
+times = 1
+total_time = 0
+batch_size = 16
+epoch_num = 10
 
 class GATNet(torch.nn.Module):
     def __init__(self):
@@ -102,27 +60,72 @@ class GCNNet(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-#from IPython.display import Javascript, display
-
-device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
-device = torch.device('cpu')
-#
-model = SAGEConvNet().to(device)
-#
-data = dataset[0].to(device)
-optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
-
-
-model.train()
-mean_time = 0
-total_time = 0
-times = 10
-epoch_num = 10
-
 for _ in range(times):
-
     # start timer
     start = time.perf_counter()
+
+    dataset_pubmed = Planetoid(root=path, name='Pubmed')
+
+    # dataset_Reddit = Reddit(root='./reddit/')
+    # dataset_Reddit2 = Reddit2(root='./reddit2/')
+    # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
+    # dataset_wiki = WikiCS(root='./WikiCS/')
+    dataset = dataset_pubmed
+    data = dataset[0]  # Get the first graph object.
+    ''' print(f'Dataset: {dataset}:')
+    print('==================')
+    print(f'Number of graphs: {len(dataset)}')
+    print(f'Number of features: {dataset.num_features}')
+    print(f'Number of classes: {dataset.num_classes}')
+
+    
+
+    print(data)
+    print('===============================================================================================================')
+
+    # Gather some statistics about the graph.
+    print(f'Number of nodes: {data.num_nodes}')
+    print(f'Number of edges: {data.num_edges}')
+    print(f'Average node degree: {data.num_edges / data.num_nodes:.2f}')
+    print(f'Number of training nodes: {data.train_mask.sum()}')
+    print(f'Training node label rate: {int(data.train_mask.sum()) / data.num_nodes:.3f}')
+    print(f'Contains isolated nodes: {data.contains_isolated_nodes()}')
+    print(f'Contains self-loops: {data.contains_self_loops()}')'''
+    # print(f'Is undirected: {data.is_undirected()}')
+
+    from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
+
+    torch.manual_seed(23122)
+    cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
+    train_loader = ClusterLoader(cluster_data, batch_size=batch_size, shuffle=True)  # 2. Stochastic partioning scheme.
+
+    print()
+    total_num_nodes = 0
+    for step, sub_data in enumerate(train_loader):
+        #print(f'Step {step + 1}:')
+        #print('=======')
+        #print(f'Number of nodes in the current batch: {sub_data.num_nodes}')
+        #print(sub_data)
+        #print()
+        total_num_nodes += sub_data.num_nodes
+
+    #print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
+
+    import torch.nn.functional as F
+    from torch_geometric.nn import GCNConv, SAGEConv, GATConv
+
+    #from IPython.display import Javascript, display
+
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    device = torch.device('cpu')
+    #
+    model = SAGEConvNet().to(device)
+    #
+    data = dataset[0].to(device)
+    optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
+    model.train()
+
+
     for epoch in range(epoch_num):
         print("Epoch:" + str(epoch))
         batch_round = 0
@@ -135,8 +138,8 @@ for _ in range(times):
             loss.backward()
             optimizer.step()
             #print("Epoch:" + str(epoch) + ". Batch: " + str(batch_round) + ".")
-    #print("Epoch " + str(epoch_num) + " Done!")
-    # stop timer
+        #print("Epoch " + str(epoch_num) + " Done!")
+        # stop timer
     end = time.perf_counter()
     # output duration
     duration = end - start
@@ -148,5 +151,6 @@ for _ in range(times):
     acc = correct / int(data.test_mask.sum())
     print('Accuracy:{:.4f}'.format(acc))
     total_time += duration
+
 mean_time = total_time / times
 print('Mean running time: %s Seconds' % mean_time)

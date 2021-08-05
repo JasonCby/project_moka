@@ -12,12 +12,14 @@ import numpy as np
 
 # import matplotlib.pyplot as plt
 times = 5
+total_time = 0
 for _ in range(times):
     # start timer
     start_t = time.perf_counter()
     # from pmem
     path = "/mnt/mem/project_moka/data/Cora/"
-    path = "/mnt/tmpfs/project_moka/data/Cora/"
+    #path = "/mnt/tmpfs/project_moka/data/Cora/"
+    #path = "/mnt/ramdisk/project_moka/data/Cora/"
     # form ram
     #path = "data/Cora/"
     cites = path + "cora.cites"
@@ -120,16 +122,9 @@ for _ in range(times):
 
     cora = Data(x=features, edge_index=edge_index.t().contiguous(), y=labels).to(device)
     #model
-    model = GCNNet(features.shape[1], len(label_to_index)).to(device)
+    model = GATNet(features.shape[1], len(label_to_index)).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
-    mean_time = 0
-    total_time = 0
-    times = 5
-
-
-
-
     for epoch in range(50):
         optimizer.zero_grad()
         out = model(cora)
