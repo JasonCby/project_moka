@@ -145,7 +145,7 @@ for _ in range(times):
     end = time.perf_counter()
     # output duration
     duration = end - start_t
-    duration2 = end - read_after
+    duration2 = read_after - start_t
     print('Reading time: %s Seconds' % duration2)
     print('Running time: %s Seconds' % duration)
     total_time += duration
