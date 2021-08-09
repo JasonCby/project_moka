@@ -85,7 +85,7 @@ for _ in range(times):
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
     torch.manual_seed(32322)
-    cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
+    cluster_data = ClusterData(data, num_parts=128, save_dir='./DataLoader/')  # 1. Create subgraphs.
     train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
                                  shuffle=True)  # 2. Stochastic partitioning scheme.
     mid = time.perf_counter()
@@ -121,10 +121,10 @@ for _ in range(times):
     end = time.perf_counter()
 
     # output duration
-    duration = mid - start
+    duration = mid - after
     file_reading = after - start
     print('Reading time: %s Seconds' % file_reading)
-    print('Mid time: %s Seconds' % duration)
+    print('Loader time: %s Seconds' % duration)
 
     model.eval()
     _, pred = model(data).max(dim=1)

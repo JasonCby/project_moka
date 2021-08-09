@@ -27,6 +27,8 @@ start = time.perf_counter()
 dataset_pubmed = Planetoid(root=path, name='Pubmed')
 # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
 
+mid = time.perf_counter()
+
 dataset = dataset_pubmed
 # dataset = dataset_pubmed
 data = dataset[0]  # Get the first graph object.
@@ -137,3 +139,7 @@ for _ in range(times):
 mean_run_time = total_run_time / times
 print('Reading time: %s Seconds' % file_reading)
 print('Mean training time: %s Seconds' % mean_run_time)
+
+
+print('Reading file time: %s Seconds' % (mid - start))
+print('Reading file(loader) time: %s Seconds' % file_reading)
