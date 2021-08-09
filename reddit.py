@@ -79,7 +79,7 @@ for _ in range(times):
     after = time.perf_counter()
 
     dataset = dataset_pubmed
-    # dataset = dataset_pubmed
+    # dataset = dataset_Cora
     data = dataset[0]  # Get the first graph object.
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader

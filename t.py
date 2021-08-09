@@ -24,10 +24,10 @@ epoch_num = 20
 
 # start timer
 start = time.perf_counter()
-# dataset_pubmed = Planetoid(root=path, name='Pubmed')
-dataset_Cora = Planetoid(root=path_Cora, name='Cora')
+dataset_pubmed = Planetoid(root=path, name='Pubmed')
+# dataset_Cora = Planetoid(root=path_Cora, name='Cora')
 
-dataset = dataset_Cora
+dataset = dataset_pubmed
 # dataset = dataset_pubmed
 data = dataset[0]  # Get the first graph object.
 
