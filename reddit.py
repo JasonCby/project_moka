@@ -71,7 +71,7 @@ class GCNNet(torch.nn.Module):
 
 
 for _ in range(times):
-    dataset_pubmed = Planetoid(root='./pubmed/', name='Pubmed')
+    dataset_test = Planetoid(root='./pubmed/', name='Pubmed')
 
     # start timer
     start = time.perf_counter()
