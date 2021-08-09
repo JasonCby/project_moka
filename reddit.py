@@ -74,13 +74,10 @@ for _ in range(times):
     # start timer
     start = time.perf_counter()
     dataset_pubmed = Planetoid(root=path, name='Pubmed')
-    dataset_Cora = Planetoid(root=path_Cora, name='Cora')
-    # dataset_Reddit = Reddit(root='./reddit/')
-    # dataset_Reddit2 = Reddit2(root='./reddit2/')
-    # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
-    # dataset_wiki = WikiCS(root=path_wk)
-    dataset = dataset_Cora
-    #dataset = dataset_pubmed
+    # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
+
+    # dataset = dataset_Cora
+    dataset = dataset_pubmed
     data = dataset[0]  # Get the first graph object.
     ''' print(f'Dataset: {dataset}:')
     print('==================')
