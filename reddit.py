@@ -130,7 +130,7 @@ for _ in range(times):
     data = dataset[0].to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
     model.train()
-
+    train_start = time.perf_counter()
     for epoch in range(epoch_num):
         #print("Epoch:" + str(epoch))
         batch_round = 0
@@ -147,7 +147,7 @@ for _ in range(times):
         # stop timer
     end = time.perf_counter()
     # output duration
-    duration = end - after
+    duration = end - train_start
     file_reading = after - start
     print('Reading time: %s Seconds' % file_reading)
     print('Training time: %s Seconds' % duration)
