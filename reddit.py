@@ -1,17 +1,19 @@
 import time
-
+import random
+import networkx as nx
 import torch
 from torch_geometric.datasets import Planetoid, WikiCS, ShapeNet, Reddit, Reddit2, CoMA, AmazonProducts
 from torch_geometric.transforms import NormalizeFeatures
+
+import torch.nn.functional as F
+from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 
 path = "/mnt/mem/project_moka/pubmed/"
 #path = "/mnt/ramfs/project_moka/pubmed/"
 #path = "/mnt/ext4ramdisk/project_moka/pubmed/"
 path = "./pubmed/"
-times = 4
-total_time = 0
-batch_size = 32
-epoch_num = 10
+total_times = 4
+batch_size = 64
 
 class GATNet(torch.nn.Module):
     def __init__(self):
@@ -60,31 +62,31 @@ class GCNNet(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
+for _ in range(total_times):
+    ori = start = time.perf_counter()
 
 
-for _ in range(times):
-    # start timer
-    start = time.perf_counter()
     dataset_pubmed = Planetoid(root=path, name='Pubmed')
+
+
     # dataset_Reddit = Reddit(root='./reddit/')
     # dataset_Reddit2 = Reddit2(root='./reddit2/')
     # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
     dataset_wiki = WikiCS(root='./WikiCS/')
     dataset = dataset_pubmed
-    data = dataset[0]  # Get the first graph object.
-    ''' print(f'Dataset: {dataset}:')
+    '''print(f'Dataset: {dataset}:')
     print('==================')
     print(f'Number of graphs: {len(dataset)}')
     print(f'Number of features: {dataset.num_features}')
-    print(f'Number of classes: {dataset.num_classes}')
+    print(f'Number of classes: {dataset.num_classes}')'''
 
-    
+    data = dataset[0]  # Get the first graph object.
 
-    print(data)
-    print('===============================================================================================================')
+    #print(data)
+    #print('===============================================================================================================')
 
     # Gather some statistics about the graph.
-    print(f'Number of nodes: {data.num_nodes}')
+    '''print(f'Number of nodes: {data.num_nodes}')
     print(f'Number of edges: {data.num_edges}')
     print(f'Average node degree: {data.num_edges / data.num_nodes:.2f}')
     print(f'Number of training nodes: {data.train_mask.sum()}')
@@ -94,41 +96,50 @@ for _ in range(times):
     # print(f'Is undirected: {data.is_undirected()}')
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
-
-    torch.manual_seed(23122)
+    random_int = random.randint(10000, 29999)
+    torch.manual_seed(12345)
     cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
     train_loader = ClusterLoader(cluster_data, batch_size=batch_size, shuffle=True)  # 2. Stochastic partioning scheme.
 
-    print()
+    # start timer
+    mid = time.perf_counter()
+
     total_num_nodes = 0
     for step, sub_data in enumerate(train_loader):
-        #print(f'Step {step + 1}:')
-        #print('=======')
-        #print(f'Number of nodes in the current batch: {sub_data.num_nodes}')
-        #print(sub_data)
-        #print()
+        '''print(f'Step {step + 1}:')
+        print('=======')
+        print(f'Number of nodes in the current batch: {sub_data.num_nodes}')
+        print(sub_data)
+        print()'''
         total_num_nodes += sub_data.num_nodes
-    # start timer
-    after = time.perf_counter()
+
     #print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
 
-    import torch.nn.functional as F
-    from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 
-    #from IPython.display import Javascript, display
+    # from IPython.display import Javascript, display
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     device = torch.device('cpu')
+    # device = torch.device('cuda')
     #
+
+
     model = GCNNet().to(device)
     #
     data = dataset[0].to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
+
     model.train()
+    mean_time = 0
+    total_time = 0
+    times = 1
+    epoch_num = 50
+
 
 
     for epoch in range(epoch_num):
-        #print("Epoch:" + str(epoch))
+        #if epoch % 5 == 0:
+            #print("Epoch:" + str(epoch))
         batch_round = 0
         for train_data in train_loader:
             batch_round += 1
@@ -138,22 +149,22 @@ for _ in range(times):
             loss = F.nll_loss(out[data.train_mask], data.y[data.train_mask])
             loss.backward()
             optimizer.step()
-            #print("Epoch:" + str(epoch) + ". Batch: " + str(batch_round) + ".")
-        #print("Epoch " + str(epoch_num) + " Done!")
-        # stop timer
+            # print("Epoch:" + str(epoch) + ". Batch: " + str(batch_round) + ".")
+    # print("Epoch " + str(epoch_num) + " Done!")
+    # stop timer
     end = time.perf_counter()
     # output duration
-    duration = end - start
-    file_reading = after - start
-    print('Reading time: %s Seconds' % file_reading)
-    print('Running time: %s Seconds' % duration)
-
+    whole_time = end - ori
+    duration2 = end - mid
+    duration_rd = mid - start
+    print('Total time: %s Seconds' % whole_time)
+    print('Running time (only training time): %s Seconds' % duration2)
+    print('Reading file and dataloader time: %s Seconds' % duration_rd)
     model.eval()
     _, pred = model(data).max(dim=1)
     correct = int(pred[data.test_mask].eq(data.y[data.test_mask]).sum().item())
     acc = correct / int(data.test_mask.sum())
     #print('Accuracy:{:.4f}'.format(acc))
-    total_time += duration
-
+    total_time += duration_rd
 mean_time = total_time / times
-#print('Mean running time: %s Seconds' % mean_time)
+print('Mean reading time: %s Seconds' % mean_time)
