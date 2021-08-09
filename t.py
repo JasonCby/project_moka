@@ -31,7 +31,6 @@ dataset = dataset_Cora
 # dataset = dataset_pubmed
 data = dataset[0]  # Get the first graph object.
 
-
 from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
 torch.manual_seed(32322)
@@ -112,7 +111,6 @@ for _ in range(times):
     model.train()
     train_start = time.perf_counter()
     for epoch in range(epoch_num):
-        # print("Epoch:" + str(epoch))
         batch_round = 0
         for train_data in train_loader:
             batch_round += 1
@@ -122,9 +120,6 @@ for _ in range(times):
             loss = F.nll_loss(out[data.train_mask], data.y[data.train_mask])
             loss.backward()
             optimizer.step()
-            # print("Epoch:" + str(epoch) + ". Batch: " + str(batch_round) + ".")
-        # print("Epoch " + str(epoch_num) + " Done!")
-        # stop timer
     end = time.perf_counter()
     # output duration
     duration = end - train_start
@@ -142,4 +137,3 @@ for _ in range(times):
 mean_run_time = total_run_time / times
 print('Reading time: %s Seconds' % file_reading)
 print('Mean training time: %s Seconds' % mean_run_time)
-

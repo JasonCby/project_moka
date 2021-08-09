@@ -7,21 +7,21 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 
 path = "/mnt/mem/project_moka/pubmed/"
-#path = "/mnt/ramfs/project_moka/pubmed/"
-#path = "/mnt/ext4ramdisk/project_moka/pubmed/"
+# path = "/mnt/ramfs/project_moka/pubmed/"
+# path = "/mnt/ext4ramdisk/project_moka/pubmed/"
 path = "./pubmed/"
 
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
-#path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
-#path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
+# path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
+# path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
 path_Cora = "./data/Cora/"
-
 
 times = 4
 total_time = 0
 total_run_time = 0
 batch_size = 128
 epoch_num = 20
+
 
 class GATNet(torch.nn.Module):
     def __init__(self):
@@ -81,9 +81,11 @@ for _ in range(times):
     data = dataset[0]  # Get the first graph object.
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
+
     torch.manual_seed(32322)
     cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
-    train_loader = ClusterLoader(cluster_data, batch_size=batch_size, shuffle=True)  # 2. Stochastic partitioning scheme.
+    train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
+                                 shuffle=True)  # 2. Stochastic partitioning scheme.
 
     print()
     total_num_nodes = 0
@@ -91,10 +93,9 @@ for _ in range(times):
         total_num_nodes += sub_data.num_nodes
     # start timer
     after = time.perf_counter()
-    #print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
+    # print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
 
-
-    #from IPython.display import Javascript, display
+    # from IPython.display import Javascript, display
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     device = torch.device('cpu')
@@ -128,12 +129,11 @@ for _ in range(times):
     _, pred = model(data).max(dim=1)
     correct = int(pred[data.test_mask].eq(data.y[data.test_mask]).sum().item())
     acc = correct / int(data.test_mask.sum())
-    #print('Accuracy:{:.4f}'.format(acc))
+    # print('Accuracy:{:.4f}'.format(acc))
     total_time += file_reading
     total_run_time += duration
 
 mean_time = total_time / times
-mean_run_time = total_run_time/times
+mean_run_time = total_run_time / times
 print('Mean reading time: %s Seconds' % mean_time)
 print('Mean training time: %s Seconds' % mean_run_time)
-
