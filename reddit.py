@@ -9,7 +9,7 @@ from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 path = "/mnt/mem/project_moka/pubmed/"
 # path = "/mnt/ramfs/project_moka/pubmed/"
 # path = "/mnt/ext4ramdisk/project_moka/pubmed/"
-# path = "./pubmed/"
+path = "./pubmed/"
 
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
@@ -86,9 +86,10 @@ for _ in range(times):
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
     torch.manual_seed(32322)
-    train_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
+    cluster_data = ClusterData(data, num_parts=128, save_dir='./DataLoader/')  # 1. Create subgraphs.
+    train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
+                                 shuffle=True)  # 2. Stochastic partitioning scheme.
     mid = time.perf_counter()
-
     print()
     total_num_nodes = 0
     for step, sub_data in enumerate(train_loader):
@@ -119,13 +120,12 @@ for _ in range(times):
             loss.backward()
             optimizer.step()
     end = time.perf_counter()
-    # del train_loader
 
     # output duration
-    duration = mid - after
-    file_reading = mid - start
+    loader_time = mid - after
+    file_reading = after - start
     print('Reading time: %s Seconds' % file_reading)
-    print('Loader time: %s Seconds' % duration)
+    print('Loader time: %s Seconds' % loader_time)
 
     model.eval()
     _, pred = model(data).max(dim=1)
@@ -133,9 +133,7 @@ for _ in range(times):
     acc = correct / int(data.test_mask.sum())
     # print('Accuracy:{:.4f}'.format(acc))
     total_time += file_reading
-    total_run_time += duration
 
 mean_time = total_time / times
-mean_run_time = total_run_time / times
 print('Mean reading time: %s Seconds' % mean_time)
-# print('Mean training time: %s Seconds' % mean_run_time)
+#print('Mean training time: %s Seconds' % mean_run_time)
