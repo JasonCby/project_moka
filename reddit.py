@@ -20,8 +20,8 @@ path_Cora = "./data/Cora/"
 times = 4
 total_time = 0
 total_run_time = 0
-batch_size = 4
-epoch_num = 10
+batch_size = 128
+epoch_num = 20
 
 class GATNet(torch.nn.Module):
     def __init__(self):
@@ -73,11 +73,11 @@ class GCNNet(torch.nn.Module):
 for _ in range(times):
     # start timer
     start = time.perf_counter()
-    dataset_pubmed = Planetoid(root=path, name='Pubmed')
-    # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
+    # dataset_pubmed = Planetoid(root=path, name='Pubmed')
+    dataset_Cora = Planetoid(root=path_Cora, name='Cora')
 
-    # dataset = dataset_Cora
-    dataset = dataset_pubmed
+    dataset = dataset_Cora
+    # dataset = dataset_pubmed
     data = dataset[0]  # Get the first graph object.
     ''' print(f'Dataset: {dataset}:')
     print('==================')
