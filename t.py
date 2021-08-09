@@ -22,6 +22,9 @@ total_run_time = 0
 batch_size = 128
 epoch_num = 20
 
+# pre-load Planetoid
+dataset_test = Planetoid(root='./pubmed/', name='Pubmed')
+
 # start timer
 start = time.perf_counter()
 dataset_pubmed = Planetoid(root=path, name='Pubmed')
