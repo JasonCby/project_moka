@@ -9,7 +9,7 @@ from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 path = "/mnt/mem/project_moka/pubmed/"
 # path = "/mnt/ramfs/project_moka/pubmed/"
 path = "/mnt/ext4ramdisk/project_moka/pubmed/"
-# path = "./pubmed/"
+path = "./pubmed/"
 
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
@@ -72,23 +72,23 @@ class GCNNet(torch.nn.Module):
 
 for _ in range(times):
     # pre-load Planetoid
-    dataset_test = Planetoid(root='./pubmed/', name='Pubmed')
-
+    #dataset_test = Planetoid(root='./pubmed/', name='Pubmed')
+    dataset_test = Planetoid(root='./data/Cora/', name='Cora')
     # start timer
     start = time.perf_counter()
-    dataset_pubmed = Planetoid(root=path, name='Pubmed')
-    # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
+    #dataset_pubmed = Planetoid(root=path, name='Pubmed')
+    dataset_Cora = Planetoid(root=path_Cora, name='Cora')
     # start timer
     after = time.perf_counter()
 
-    dataset = dataset_pubmed
+    dataset = dataset_Cora
     # dataset = dataset_Cora
     data = dataset[0]  # Get the first graph object.
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
     torch.manual_seed(32322)
-    cluster_data = ClusterData(data, num_parts=128, save_dir='./DataLoader/')  # 1. Create subgraphs.
+    cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
     train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
                                  shuffle=True)  # 2. Stochastic partitioning scheme.
     mid = time.perf_counter()
