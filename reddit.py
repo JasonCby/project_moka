@@ -87,6 +87,9 @@ for _ in range(times):
 
     torch.manual_seed(32322)
     cluster_data = ClusterData(data, num_parts=128, save_dir='./DataLoader/')  # 1. Create subgraphs.
+
+    cluster = time.perf_counter()
+
     train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
                                  shuffle=True)  # 2. Stochastic partitioning scheme.
     mid = time.perf_counter()
@@ -122,7 +125,7 @@ for _ in range(times):
     end = time.perf_counter()
 
     # output duration
-    duration = mid - after
+    duration = cluster - after
     file_reading = after - start
     print('Reading time: %s Seconds' % file_reading)
     print('Loader time: %s Seconds' % duration)
