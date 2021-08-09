@@ -147,10 +147,10 @@ for _ in range(times):
         # stop timer
     end = time.perf_counter()
     # output duration
-    duration = end - start
+    duration = end - after
     file_reading = after - start
     print('Reading time: %s Seconds' % file_reading)
-    print('Running time: %s Seconds' % duration)
+    print('Training time: %s Seconds' % duration)
 
     model.eval()
     _, pred = model(data).max(dim=1)
@@ -163,5 +163,5 @@ for _ in range(times):
 mean_time = total_time / times
 mean_run_time = total_run_time/times
 print('Mean reading time: %s Seconds' % mean_time)
-print('Mean running time: %s Seconds' % mean_run_time)
+print('Mean training time: %s Seconds' % mean_run_time)
 
