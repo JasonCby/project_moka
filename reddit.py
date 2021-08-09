@@ -7,7 +7,7 @@ import torch.nn.functional as F
 from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 
 path = "/mnt/mem/project_moka/pubmed/"
-# path = "/mnt/ramfs/project_moka/pubmed/"
+path = "/mnt/ramfs/project_moka/pubmed/"
 # path = "/mnt/ext4ramdisk/project_moka/pubmed/"
 # path = "./pubmed/"
 
