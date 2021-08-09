@@ -121,7 +121,7 @@ for _ in range(times):
     end = time.perf_counter()
 
     # output duration
-    duration = mid - start
+    duration = start - start
     file_reading = after - start
     print('Reading time: %s Seconds' % file_reading)
     print('Mid time: %s Seconds' % duration)
