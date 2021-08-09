@@ -27,25 +27,13 @@ start = time.perf_counter()
 dataset_pubmed = Planetoid(root=path, name='Pubmed')
 # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
 
-mid = time.perf_counter()
+after = time.perf_counter()
 
 dataset = dataset_pubmed
 # dataset = dataset_pubmed
 data = dataset[0]  # Get the first graph object.
 
-from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
-torch.manual_seed(32322)
-cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
-train_loader = ClusterLoader(cluster_data, batch_size=batch_size, shuffle=True)  # 2. Stochastic partioning scheme.
-
-print()
-total_num_nodes = 0
-for step, sub_data in enumerate(train_loader):
-    total_num_nodes += sub_data.num_nodes
-
-# start timer
-after = time.perf_counter()
 
 file_reading = after - start
 
@@ -98,6 +86,21 @@ class GCNNet(torch.nn.Module):
 
 
 for _ in range(times):
+    train_start = time.perf_counter()
+    
+    from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
+
+    torch.manual_seed(32322)
+    cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
+    train_loader = ClusterLoader(cluster_data, batch_size=batch_size, shuffle=True)  # 2. Stochastic partioning scheme.
+
+    print()
+    total_num_nodes = 0
+    for step, sub_data in enumerate(train_loader):
+        total_num_nodes += sub_data.num_nodes
+
+    # start timer
+    after = time.perf_counter()
 
     # print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
 
@@ -106,12 +109,12 @@ for _ in range(times):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     device = torch.device('cpu')
     #
-    model = SAGEConvNet().to(device)
+    model = GCNNet().to(device)
     #
     data = dataset[0].to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
     model.train()
-    train_start = time.perf_counter()
+
     for epoch in range(epoch_num):
         batch_round = 0
         for train_data in train_loader:
@@ -140,6 +143,4 @@ mean_run_time = total_run_time / times
 print('Reading time: %s Seconds' % file_reading)
 print('Mean training time: %s Seconds' % mean_run_time)
 
-
-print('Reading file time: %s Seconds' % (mid - start))
 print('Reading file(loader) time: %s Seconds' % file_reading)
