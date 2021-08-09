@@ -71,7 +71,7 @@ class GCNNet(torch.nn.Module):
 
 
 for _ in range(times):
-    cluster_data = None
+
     # start timer
     start = time.perf_counter()
     dataset_pubmed = Planetoid(root=path, name='Pubmed')
@@ -86,13 +86,9 @@ for _ in range(times):
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
     torch.manual_seed(32322)
-    cluster_data = ClusterData(data, num_parts=128, save_dir='./DataLoader/')  # 1. Create subgraphs.
-
-    cluster = time.perf_counter()
-
-    train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
-                                 shuffle=True)  # 2. Stochastic partitioning scheme.
+    train_loader = DataLoader(dataset, batch_size = batch_size, shuffle=True)
     mid = time.perf_counter()
+
     print()
     total_num_nodes = 0
     for step, sub_data in enumerate(train_loader):
@@ -123,10 +119,11 @@ for _ in range(times):
             loss.backward()
             optimizer.step()
     end = time.perf_counter()
+    #del train_loader
 
     # output duration
-    duration = cluster - after
-    file_reading = after - start
+    duration = mid - after
+    file_reading = mid - start
     print('Reading time: %s Seconds' % file_reading)
     print('Loader time: %s Seconds' % duration)
 
