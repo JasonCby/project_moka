@@ -14,7 +14,7 @@ path = "./pubmed/"
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
 # path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
-# path_Cora = "./data/Cora/"
+path_Cora = "./data/Cora/"
 
 times = 4
 total_time = 0
@@ -86,13 +86,13 @@ for _ in range(times):
     cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
     train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
                                  shuffle=True)  # 2. Stochastic partitioning scheme.
-
+    # start timer
+    after = time.perf_counter()
     print()
     total_num_nodes = 0
     for step, sub_data in enumerate(train_loader):
         total_num_nodes += sub_data.num_nodes
-    # start timer
-    after = time.perf_counter()
+
     # print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
 
     # from IPython.display import Javascript, display
