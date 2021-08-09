@@ -81,7 +81,7 @@ for _ in range(times):
     data = dataset[0]  # Get the first graph object.
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
-    torch.manual_seed(23122)
+    torch.manual_seed(32322)
     cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
     train_loader = ClusterLoader(cluster_data, batch_size=batch_size, shuffle=True)  # 2. Stochastic partitioning scheme.
 
