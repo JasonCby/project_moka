@@ -14,7 +14,7 @@ path = "./pubmed/"
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
 # path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
-# path_Cora = "./data/Cora/"
+path_Cora = "./data/Cora/"
 
 times = 4
 total_time = 0
@@ -75,6 +75,7 @@ for _ in range(times):
     start = time.perf_counter()
     # dataset_pubmed = Planetoid(root=path, name='Pubmed')
     dataset_Cora = Planetoid(root=path_Cora, name='Cora')
+    mid = time.perf_counter()
 
     dataset = dataset_Cora
     # dataset = dataset_pubmed
@@ -120,10 +121,10 @@ for _ in range(times):
     end = time.perf_counter()
 
     # output duration
-    duration = end - train_start
+    duration = mid - start
     file_reading = after - start
     print('Reading time: %s Seconds' % file_reading)
-    #print('Training time: %s Seconds' % duration)
+    print('Mid time: %s Seconds' % duration)
 
     model.eval()
     _, pred = model(data).max(dim=1)
