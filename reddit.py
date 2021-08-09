@@ -5,7 +5,7 @@ from torch_geometric.datasets import Planetoid, WikiCS, ShapeNet, Reddit, Reddit
 from torch_geometric.transforms import NormalizeFeatures
 
 path = "/mnt/mem/project_moka/pubmed/"
-#path = "/mnt/tmpfs/project_moka/pubmed/"
+#path = "/mnt/ramfs/project_moka/pubmed/"
 #path = "/mnt/ext4ramdisk/project_moka/pubmed/"
 path = "./pubmed/"
 times = 4
@@ -69,7 +69,7 @@ for _ in range(times):
     # dataset_Reddit = Reddit(root='./reddit/')
     # dataset_Reddit2 = Reddit2(root='./reddit2/')
     # dataset_AmazonProducts = AmazonProducts(root='./AmazonProducts')
-    # dataset_wiki = WikiCS(root='./WikiCS/')
+    dataset_wiki = WikiCS(root='./WikiCS/')
     dataset = dataset_pubmed
     data = dataset[0]  # Get the first graph object.
     ''' print(f'Dataset: {dataset}:')
