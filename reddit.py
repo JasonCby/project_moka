@@ -13,7 +13,7 @@ path = "./pubmed/"
 
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
-# path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
+path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
 # path_Cora = "./data/Cora/"
 
 times = 10
