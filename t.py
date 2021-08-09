@@ -30,42 +30,19 @@ dataset_Cora = Planetoid(root=path_Cora, name='Cora')
 dataset = dataset_Cora
 # dataset = dataset_pubmed
 data = dataset[0]  # Get the first graph object.
-''' print(f'Dataset: {dataset}:')
-print('==================')
-print(f'Number of graphs: {len(dataset)}')
-print(f'Number of features: {dataset.num_features}')
-print(f'Number of classes: {dataset.num_classes}')
 
-
-
-print(data)
-print('===============================================================================================================')
-
-# Gather some statistics about the graph.
-print(f'Number of nodes: {data.num_nodes}')
-print(f'Number of edges: {data.num_edges}')
-print(f'Average node degree: {data.num_edges / data.num_nodes:.2f}')
-print(f'Number of training nodes: {data.train_mask.sum()}')
-print(f'Training node label rate: {int(data.train_mask.sum()) / data.num_nodes:.3f}')
-print(f'Contains isolated nodes: {data.contains_isolated_nodes()}')
-print(f'Contains self-loops: {data.contains_self_loops()}')'''
-# print(f'Is undirected: {data.is_undirected()}')
 
 from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
-torch.manual_seed(23122)
+torch.manual_seed(32322)
 cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
 train_loader = ClusterLoader(cluster_data, batch_size=batch_size, shuffle=True)  # 2. Stochastic partioning scheme.
 
 print()
 total_num_nodes = 0
 for step, sub_data in enumerate(train_loader):
-    # print(f'Step {step + 1}:')
-    # print('=======')
-    # print(f'Number of nodes in the current batch: {sub_data.num_nodes}')
-    # print(sub_data)
-    # print()
     total_num_nodes += sub_data.num_nodes
+
 # start timer
 after = time.perf_counter()
 
