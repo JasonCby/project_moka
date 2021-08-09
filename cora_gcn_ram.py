@@ -144,10 +144,10 @@ for _ in range(times):
     # stop timer
     end = time.perf_counter()
     # output duration
-    duration = end - start_t
+    duration = end - read_after
     duration2 = read_after - start_t
     print('Reading time: %s Seconds' % duration2)
-    print('Running time: %s Seconds' % duration)
-    total_time += duration
+    print('Training time: %s Seconds' % duration)
+    total_time += duration2
 mean_time = total_time/times
-print('Mean running time: %s Seconds' % mean_time)
+print('Mean reading time: %s Seconds' % mean_time)
