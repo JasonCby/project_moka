@@ -14,7 +14,7 @@ path = "/mnt/mem/project_moka/pubmed/"
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
 # path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
-path_Cora = "./data/Cora/"
+# path_Cora = "./data/Cora/"
 
 times = 4
 total_time = 0
@@ -27,12 +27,12 @@ epoch_num = 20
 
 # start timer
 start = time.perf_counter()
-dataset_pubmed = Planetoid(root=path, name='Pubmed')
-# dataset_Cora = Planetoid(root=path_Cora, name='Cora')
+#dataset_pubmed = Planetoid(root=path, name='Pubmed')
+dataset_Cora = Planetoid(root=path_Cora, name='Cora')
 
 after = time.perf_counter()
 
-dataset = dataset_pubmed
+dataset = dataset_Cora
 # dataset = dataset_pubmed
 data = dataset[0]  # Get the first graph object.
 
