@@ -9,7 +9,7 @@ from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 path = "/mnt/mem/project_moka/pubmed/"
 # path = "/mnt/ramfs/project_moka/pubmed/"
 # path = "/mnt/ext4ramdisk/project_moka/pubmed/"
-# path = "./pubmed/"
+path = "./pubmed/"
 
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
@@ -86,7 +86,7 @@ for _ in range(times):
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
 
     torch.manual_seed(32322)
-    train_loader = DataLoader(dataset, batch_size = batch_size, shuffle=True)
+    train_loader = DataLoader(dataset, batch_size=batch_size, shuffle=True)
     mid = time.perf_counter()
 
     print()
@@ -119,7 +119,7 @@ for _ in range(times):
             loss.backward()
             optimizer.step()
     end = time.perf_counter()
-    #del train_loader
+    # del train_loader
 
     # output duration
     duration = mid - after
@@ -138,4 +138,4 @@ for _ in range(times):
 mean_time = total_time / times
 mean_run_time = total_run_time / times
 print('Mean reading time: %s Seconds' % mean_time)
-#print('Mean training time: %s Seconds' % mean_run_time)
+# print('Mean training time: %s Seconds' % mean_run_time)
