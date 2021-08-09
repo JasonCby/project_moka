@@ -9,7 +9,7 @@ from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 path = "/mnt/mem/project_moka/pubmed/"
 # path = "/mnt/ramfs/project_moka/pubmed/"
 # path = "/mnt/ext4ramdisk/project_moka/pubmed/"
-path = "./pubmed/"
+# path = "./pubmed/"
 
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
@@ -73,12 +73,12 @@ class GCNNet(torch.nn.Module):
 for _ in range(times):
     # start timer
     start = time.perf_counter()
-    # dataset_pubmed = Planetoid(root=path, name='Pubmed')
-    dataset_Cora = Planetoid(root=path_Cora, name='Cora')
+    dataset_pubmed = Planetoid(root=path, name='Pubmed')
+    # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
     # start timer
     after = time.perf_counter()
 
-    dataset = dataset_Cora
+    dataset = dataset_pubmed
     # dataset = dataset_pubmed
     data = dataset[0]  # Get the first graph object.
 
