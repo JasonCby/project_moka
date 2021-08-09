@@ -8,7 +8,7 @@ from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 
 path = "/mnt/mem/project_moka/pubmed/"
 # path = "/mnt/ramfs/project_moka/pubmed/"
-# path = "/mnt/ext4ramdisk/project_moka/pubmed/"
+path = "/mnt/ext4ramdisk/project_moka/pubmed/"
 # path = "./pubmed/"
 
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
@@ -71,6 +71,7 @@ class GCNNet(torch.nn.Module):
 
 
 for _ in range(times):
+    # pre-load Planetoid
     dataset_test = Planetoid(root='./pubmed/', name='Pubmed')
 
     # start timer
