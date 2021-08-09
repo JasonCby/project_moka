@@ -16,7 +16,7 @@ path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
 # path_Cora = "./data/Cora/"
 
-times = 4
+times = 10
 total_time = 0
 total_run_time = 0
 batch_size = 128
