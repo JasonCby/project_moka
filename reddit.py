@@ -72,7 +72,7 @@ class GCNNet(torch.nn.Module):
 
 for _ in range(times):
     # pre-load Planetoid
-    dataset_test = Planetoid(root='./pubmed/', name='Pubmed')
+    dataset_test = Planetoid(root="./data/Cora/", name='Cora')
     # dataset_test = Planetoid(root='./data/Cora/', name='Cora')
     dataset = dataset_test
     data = dataset[0]  # Get the first graph object.
