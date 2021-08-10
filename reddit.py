@@ -22,6 +22,21 @@ total_run_time = 0
 batch_size = 128
 epoch_num = 20
 
+# pre-load Planetoid
+dataset_test = Planetoid(root="./data/Cora/", name='Cora')
+# dataset_test = Planetoid(root='./data/Cora/', name='Cora')
+dataset = dataset_test
+data = dataset[0]  # Get the first graph object.
+
+from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
+
+torch.manual_seed(32322)
+cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
+train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
+                             shuffle=True)  # 2. Stochastic partitioning scheme.
+
+
+# finish pre-load
 
 class GATNet(torch.nn.Module):
     def __init__(self):
@@ -71,19 +86,6 @@ class GCNNet(torch.nn.Module):
 
 
 for _ in range(times):
-    # pre-load Planetoid
-    dataset_test = Planetoid(root="./data/Cora/", name='Cora')
-    # dataset_test = Planetoid(root='./data/Cora/', name='Cora')
-    dataset = dataset_test
-    data = dataset[0]  # Get the first graph object.
-
-    from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
-
-    torch.manual_seed(32322)
-    cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
-    train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
-                                 shuffle=True)  # 2. Stochastic partitioning scheme.
-    # finish pre-load
 
     # start timer
     start = time.perf_counter()
