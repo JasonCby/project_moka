@@ -74,6 +74,7 @@ for _ in range(times):
     # pre-load Planetoid
     dataset_test = Planetoid(root='./pubmed/', name='Pubmed')
     # dataset_test = Planetoid(root='./data/Cora/', name='Cora')
+    dataset = dataset_pubmed
     data = dataset[0]  # Get the first graph object.
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
