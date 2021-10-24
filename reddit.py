@@ -16,6 +16,9 @@ path_Cora = "/mnt/mem/project_moka/data/Cora/"
 path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
 # path_Cora = "./data/Cora/"
 
+path_pm = "/mnt/mem/datasets/"
+path_ram = "/mnt/ramfs/datasets/"
+
 times = 15
 total_time = 0
 total_run_time = 0
@@ -89,7 +92,7 @@ for n in range(times):
 
     # start timer
     start = time.perf_counter()
-    dataset_pubmed = Planetoid(root=path, name='Pubmed')
+    dataset_pubmed = WikiCS(root=path_pm)
     # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
     # start timer
     after = time.perf_counter()
