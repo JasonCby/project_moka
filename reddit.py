@@ -16,7 +16,7 @@ path_Cora = "/mnt/mem/project_moka/data/Cora/"
 path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
 # path_Cora = "./data/Cora/"
 
-times = 10
+times = 15
 total_time = 0
 total_run_time = 0
 batch_size = 128
@@ -85,7 +85,7 @@ class GCNNet(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-for _ in range(times):
+for n in range(times):
 
     # start timer
     start = time.perf_counter()
@@ -147,8 +147,9 @@ for _ in range(times):
     #correct = int(pred[data.test_mask].eq(data.y[data.test_mask]).sum().item())
     #acc = correct / int(data.test_mask.sum())
     # print('Accuracy:{:.4f}'.format(acc))
-    total_time += file_reading
+    if n != 0:
+        total_time += file_reading
 
-mean_time = total_time / times
+mean_time = total_time / times - 1
 print('Mean reading time: %s Seconds' % mean_time)
 # print('Mean training time: %s Seconds' % mean_run_time)
