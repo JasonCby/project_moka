@@ -94,7 +94,7 @@ for _ in range(times):
     # start timer
     after = time.perf_counter()
 
-    dataset = dataset_pubmed
+    '''dataset = dataset_pubmed
     # dataset = dataset_Cora
     data = dataset[0]  # Get the first graph object.
 
@@ -137,15 +137,15 @@ for _ in range(times):
     end = time.perf_counter()
 
     # output duration
-    loader_time = mid - after
+    loader_time = mid - after'''
     file_reading = after - start
     print('Reading time: %s Seconds' % file_reading)
-    print('Loader time: %s Seconds' % loader_time)
+    #print('Loader time: %s Seconds' % loader_time)
 
-    model.eval()
-    _, pred = model(data).max(dim=1)
-    correct = int(pred[data.test_mask].eq(data.y[data.test_mask]).sum().item())
-    acc = correct / int(data.test_mask.sum())
+    #model.eval()
+    #_, pred = model(data).max(dim=1)
+    #correct = int(pred[data.test_mask].eq(data.y[data.test_mask]).sum().item())
+    #acc = correct / int(data.test_mask.sum())
     # print('Accuracy:{:.4f}'.format(acc))
     total_time += file_reading
 
