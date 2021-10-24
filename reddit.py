@@ -92,7 +92,7 @@ for n in range(times):
 
     # start timer
     start = time.perf_counter()
-    dataset_pubmed = AmazonProducts(root=path_ram+"AmazonProducts/")
+    dataset_pubmed = ShapeNet(root=path_ram+"ShapeNet/")
     # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
     # start timer
     after = time.perf_counter()
