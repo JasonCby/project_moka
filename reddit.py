@@ -92,7 +92,7 @@ for n in range(times):
 
     # start timer
     start = time.perf_counter()
-    dataset_pubmed = Reddit(root=path_ram)
+    dataset_pubmed = Reddit(root=path_pm)
     # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
     # start timer
     after = time.perf_counter()
