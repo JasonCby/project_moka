@@ -150,6 +150,6 @@ for n in range(times):
     if n != 0:
         total_time += file_reading
 
-mean_time = total_time / times - 1
+mean_time = total_time / (times - 1)
 print('Mean reading time: %s Seconds' % mean_time)
 # print('Mean training time: %s Seconds' % mean_run_time)
