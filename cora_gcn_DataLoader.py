@@ -103,7 +103,7 @@ for _ in range(times):
             return F.log_softmax(x, dim=1)
 
 
-    seed = 1234
+    '''seed = 1234
     torch.manual_seed(seed)
     torch.cuda.manual_seed(seed)
     torch.cuda.manual_seed_all(seed)
@@ -140,7 +140,7 @@ for _ in range(times):
             correct = int(pred[test_mask].eq(cora.y[test_mask]).sum().item())
             acc = correct / len(test_mask)
             #print('Accuracy: {:.4f}'.format(acc))
-            model.train()
+            model.train()'''
     # stop timer
     end = time.perf_counter()
     # output duration
