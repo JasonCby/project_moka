@@ -15,8 +15,7 @@ times = 4
 total_time = 0
 
 for _ in range(times):
-    # start timer
-    start_t = time.perf_counter()
+
     # from pmem
     path = "/mnt/mem/project_moka/data/Cora/"
     #path = "/mnt/ramfs/project_moka/data/Cora/"
@@ -26,24 +25,23 @@ for _ in range(times):
     cites = path + "cora.cites"
     content = path + "cora.content"
     # start timer
-    # 索引字典，将原本的论文id转换到从0开始编码
-    index_dict = dict()
-    # 标签字典，将字符串标签转化为数值
-    label_to_index = dict()
 
+    # Index dictionary to convert the original paper id to encode from 0
+    index_dict = dict()
+    # Tag dictionary, converting string tags to values
+    label_to_index = dict()
     features = []
     labels = []
     edge_index = []
+    # start timer
+    start_t = time.perf_counter()
 
     with open(content, "r") as f:
         nodes = f.readlines()
-        #print(nodes[0])
-        #print(len(nodes))
         for node in nodes:
             node_info = node.split()
             index_dict[int(node_info[0])] = len(index_dict)
             features.append([int(i) for i in node_info[1:-1]])
-
             label_str = node_info[-1]
             if (label_str not in label_to_index.keys()):
                 label_to_index[label_str] = len(label_to_index)
@@ -53,18 +51,16 @@ for _ in range(times):
         edges = f.readlines()
         for edge in edges:
             start, end = edge.split()
-            # 训练时将边视为无向的，但原本的边是有向的，因此需要正反添加两次
             edge_index.append([index_dict[int(start)], index_dict[int(end)]])
             edge_index.append([index_dict[int(end)], index_dict[int(start)]])
 
-    # 为每个节点增加自环，但后续GCN层默认会添加自环，跳过即可
     # for i in range(2708):
     #     edge_index.append([i,i])
     read_after = time.perf_counter()
-    # 转换为Tensor
+    # To Tensor
     labels = torch.LongTensor(labels)
     features = torch.FloatTensor(features)
-    # 行归一化
+    # norm
     # features = torch.nn.functional.normalize(features, p=1, dim=1)
     edge_index = torch.LongTensor(edge_index)
 

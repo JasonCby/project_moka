@@ -14,7 +14,7 @@ path = "/mnt/mem/project_moka/pubmed/"
 path_Cora = "/mnt/mem/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
 path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
-# path_Cora = "./data/Cora/"
+path_Cora = "./data/Cora/"
 
 path_pm = "/mnt/mem/datasets/"
 path_ram = "/mnt/ramfs/datasets/"
@@ -92,8 +92,9 @@ for n in range(times):
 
     # start timer
     start = time.perf_counter()
-    dataset_pubmed = ShapeNet(root=path_pm+"ShapeNet/")
-    # dataset_Cora = Planetoid(root=path_Cora, name='Cora')
+
+    #dataset_pubmed = ShapeNet(root=path_pm+"ShapeNet/")
+    dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after = time.perf_counter()
 
