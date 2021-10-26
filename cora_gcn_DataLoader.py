@@ -34,25 +34,29 @@ for _ in range(times):
     labels = []
     edge_index = []
     # start timer
-    start_t = time.perf_counter()
-
+    start_t1 = time.perf_counter()
     with open(content, "r") as f:
         nodes = f.readlines()
-        for node in nodes:
-            node_info = node.split()
-            index_dict[int(node_info[0])] = len(index_dict)
-            features.append([int(i) for i in node_info[1:-1]])
-            label_str = node_info[-1]
-            if (label_str not in label_to_index.keys()):
-                label_to_index[label_str] = len(label_to_index)
-            labels.append(label_to_index[label_str])
+    start_t2 = time.perf_counter()
 
+    for node in nodes:
+        node_info = node.split()
+        index_dict[int(node_info[0])] = len(index_dict)
+        features.append([int(i) for i in node_info[1:-1]])
+        label_str = node_info[-1]
+        if (label_str not in label_to_index.keys()):
+            label_to_index[label_str] = len(label_to_index)
+        labels.append(label_to_index[label_str])
+
+    start_t3 = time.perf_counter()
     with open(cites, "r") as f:
         edges = f.readlines()
-        for edge in edges:
-            start, end = edge.split()
-            edge_index.append([index_dict[int(start)], index_dict[int(end)]])
-            edge_index.append([index_dict[int(end)], index_dict[int(start)]])
+    start_t4 = time.perf_counter()
+
+    for edge in edges:
+        start, end = edge.split()
+        edge_index.append([index_dict[int(start)], index_dict[int(end)]])
+        edge_index.append([index_dict[int(end)], index_dict[int(start)]])
 
     # for i in range(2708):
     #     edge_index.append([i,i])
@@ -141,7 +145,7 @@ for _ in range(times):
     end = time.perf_counter()
     # output duration
     duration = end - read_after
-    duration2 = read_after - start_t
+    duration2 = start_t4 - start_t3 + start_t2 - start_t1
     print('Reading time: %s Seconds' % duration2)
     print('Training time: %s Seconds' % duration)
     total_time += duration2
