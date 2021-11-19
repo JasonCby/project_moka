@@ -68,6 +68,8 @@ for _ in range(times):
     # features = torch.nn.functional.normalize(features, p=1, dim=1)
     edge_index = torch.LongTensor(edge_index)
 
+    tensor_time = time.perf_counter()
+
 
     class GCNNet(torch.nn.Module):
         def __init__(self, num_feature, num_label):
@@ -146,12 +148,12 @@ for _ in range(times):
     # output duration
     duration = end - read_after
     duration2 = start_t4 - start_t3 + start_t2 - start_t1
-    duration3 = read_after - start_t1
+    duration3 = tensor_time - start_t1
     duration4 = start_t2 - start_t1
     duration5 = start_t4 - start_t3
     print('Reading time: %s Seconds' % duration2)
     print('Training time: %s Seconds' % duration)
-    print('Total reading: %s Seconds' % duration3)
+    print('Total: %s Seconds' % duration3)
     print('Reading 1: %s Seconds' % duration4)
     print('Reading 2: %s Seconds' % duration5)
     total_time += duration2
