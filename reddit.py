@@ -26,9 +26,14 @@ batch_size = 128
 epoch_num = 20
 
 # pre-load Planetoid
-dataset_test = Planetoid(root="./data/Cora/", name='Cora')
+dataset_test = Planetoid(root="./tmp/Cora/", name='Cora')
+# the dataset for test is shown below (different from the above)
 # dataset_test = Planetoid(root='./data/Cora/', name='Cora')
-dataset = dataset_test
+
+
+#dataset = dataset_test
+
+
 data = dataset[0]  # Get the first graph object.
 
 from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
@@ -88,7 +93,7 @@ class GCNNet(torch.nn.Module):
         return F.log_softmax(x, dim=1)
 
 
-for n in range(times):
+for n in range(1):
 
     # start timer
     start = time.perf_counter()
@@ -98,8 +103,8 @@ for n in range(times):
     # start timer
     after = time.perf_counter()
 
-    '''dataset = dataset_pubmed
-    # dataset = dataset_Cora
+    #dataset = dataset_pubmed
+    dataset = dataset_Cora
     data = dataset[0]  # Get the first graph object.
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
@@ -121,7 +126,7 @@ for n in range(times):
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     device = torch.device('cpu')
     #
-    model = GCNNet().to(device)
+    model = SAGEConvNet().to(device)
     #
     data = dataset[0].to(device)
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
@@ -141,11 +146,12 @@ for n in range(times):
     end = time.perf_counter()
 
     # output duration
-    loader_time = mid - after'''
+    loader_time = mid - after
+    train_time = end - train_start
     file_reading = after - start
     print('Reading time: %s Seconds' % file_reading)
-    #print('Loader time: %s Seconds' % loader_time)
-
+    print('Loader time: %s Seconds' % loader_time)
+    print('Training time: %s Seconds' % train_time)
     #model.eval()
     #_, pred = model(data).max(dim=1)
     #correct = int(pred[data.test_mask].eq(data.y[data.test_mask]).sum().item())
