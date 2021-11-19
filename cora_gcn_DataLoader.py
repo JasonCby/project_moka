@@ -126,7 +126,7 @@ for _ in range(times):
     model = GATNet(features.shape[1], len(label_to_index)).to(device)
 
     optimizer = torch.optim.Adam(model.parameters(), lr=0.01, weight_decay=5e-4)
-    for epoch in range(50):
+    for epoch in range(1):
         optimizer.zero_grad()
         out = model(cora)
         loss = F.nll_loss(out[train_mask], cora.y[train_mask])
@@ -147,9 +147,11 @@ for _ in range(times):
     duration = end - read_after
     duration2 = start_t4 - start_t3 + start_t2 - start_t1
     duration3 = read_after - start_t1
+    duration4 = start_t2 - start_t1
     print('Reading time: %s Seconds' % duration2)
     print('Training time: %s Seconds' % duration)
     print('Total reading: %s Seconds' % duration3)
+    print('Reading 1: %s Seconds' % duration4)
     total_time += duration2
 mean_time = total_time/times
 print('Mean reading time: %s Seconds' % mean_time)
