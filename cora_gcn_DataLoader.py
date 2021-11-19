@@ -11,14 +11,14 @@ from sklearn.manifold import TSNE
 import numpy as np
 
 # import matplotlib.pyplot as plt
-times = 4
+times = 10
 total_time = 0
 
 for _ in range(times):
 
     # from pmem
     path = "/mnt/mem/project_moka/data/Cora/"
-    path = "/mnt/ramfs/project_moka/data/Cora/"
+    #path = "/mnt/ramfs/project_moka/data/Cora/"
     #path = "/mnt/ramdisk/project_moka/data/Cora/"
     # form ram
     path = "data/Cora/"
