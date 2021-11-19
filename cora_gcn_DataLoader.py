@@ -11,7 +11,7 @@ from sklearn.manifold import TSNE
 import numpy as np
 
 # import matplotlib.pyplot as plt
-times = 2
+times = 5
 total_time = 0
 
 for _ in range(times):
@@ -21,7 +21,7 @@ for _ in range(times):
     #path = "/mnt/ramfs/project_moka/data/Cora/"
     #path = "/mnt/ramdisk/project_moka/data/Cora/"
     # form ram
-    path = "data/Cora/"
+    #path = "data/Cora/"
     cites = path + "cora.cites"
     content = path + "cora.content"
     # start timer
