@@ -148,10 +148,12 @@ for _ in range(times):
     duration2 = start_t4 - start_t3 + start_t2 - start_t1
     duration3 = read_after - start_t1
     duration4 = start_t2 - start_t1
+    duration5 = start_t4 - start_t3
     print('Reading time: %s Seconds' % duration2)
     print('Training time: %s Seconds' % duration)
     print('Total reading: %s Seconds' % duration3)
     print('Reading 1: %s Seconds' % duration4)
+    print('Reading 2: %s Seconds' % duration5)
     total_time += duration2
 mean_time = total_time/times
 print('Mean reading time: %s Seconds' % mean_time)
