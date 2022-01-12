@@ -26,7 +26,7 @@ batch_size = 128
 epoch_num = 20
 
 # pre-load Planetoid
-dataset_test = Planetoid(root=path_Cora, name='Cora')
+dataset_test = Planetoid(root="./pubmed/", name='Pubmed')
 #dataset_test = Planetoid(root=path_Cora, name='Cora')
 # the dataset for test is shown below (different from the above)
 # dataset_test = Planetoid(root='./data/Cora/', name='Cora')
