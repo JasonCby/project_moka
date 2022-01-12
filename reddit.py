@@ -95,7 +95,6 @@ class GCNNet(torch.nn.Module):
 
 
 for n in range(1):
-    torch.load()
 
     # start timer
     start = time.perf_counter()
