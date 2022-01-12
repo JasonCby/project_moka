@@ -6,17 +6,17 @@ from torch_geometric.transforms import NormalizeFeatures
 import torch.nn.functional as F
 from torch_geometric.nn import GCNConv, SAGEConv, GATConv
 
-path = "/mnt/mem/project_moka/pubmed/"
+path = "/mnt/NVme/project_moka/pubmed/"
 #path = "/mnt/ramfs/project_moka/pubmed/"
 #path = "/mnt/ext4ramdisk/project_moka/pubmed/"
 #path = "./pubmed/"
 
-path_Cora = "/mnt/mem/project_moka/data/Cora/"
+path_Cora = "/mnt/NVme/project_moka/data/Cora/"
 # path_Cora = "/mnt/ramfs/project_moka/data/Cora/"
-path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
-path_Cora = "./data/Cora/"
+#path_Cora = "/mnt/ext4ramdisk/project_moka/data/Cora/"
+#path_Cora = "./data/Cora/"
 
-path_pm = "/mnt/mem/datasets/"
+path_pm = "/mnt/NVme/datasets/"
 path_ram = "/mnt/ramfs/datasets/"
 
 times = 15
@@ -26,12 +26,13 @@ batch_size = 128
 epoch_num = 20
 
 # pre-load Planetoid
-dataset_test = Planetoid(root="./tmp/Cora/", name='Cora')
+dataset_test = Planetoid(root=path_Cora, name='Cora')
+#dataset_test = Planetoid(root=path_Cora, name='Cora')
 # the dataset for test is shown below (different from the above)
 # dataset_test = Planetoid(root='./data/Cora/', name='Cora')
 
 
-#dataset = dataset_test
+dataset = dataset_test
 
 
 data = dataset[0]  # Get the first graph object.
@@ -94,17 +95,18 @@ class GCNNet(torch.nn.Module):
 
 
 for n in range(1):
+    torch.load()
 
     # start timer
     start = time.perf_counter()
 
-    #dataset_pubmed = ShapeNet(root=path_pm+"ShapeNet/")
-    dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
+    dataset_pubmed = Planetoid(root=path, name="Pubmed")
+    #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after = time.perf_counter()
 
     #dataset = dataset_pubmed
-    dataset = dataset_Cora
+    dataset = dataset_pubmed
     data = dataset[0]  # Get the first graph object.
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
