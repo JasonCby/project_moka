@@ -99,7 +99,7 @@ for n in range(1):
     # start timer
     start = time.perf_counter()
 
-    dataset_pubmed = Planetoid(root=path, name="Pubmed")
+    dataset_pubmed = Planetoid(root="./pubmed/", name='Pubmed')
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after = time.perf_counter()
