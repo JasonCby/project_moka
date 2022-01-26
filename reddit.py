@@ -98,7 +98,7 @@ for n in range(1):
 
     # start timer
     start = time.perf_counter()
-
+    dataset_pubmed1 = Reddit(root="/mnt/NVme/project_moka/datasets/")
     #dataset_pubmed = Planetoid(root="./pubmed/")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
