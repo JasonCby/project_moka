@@ -96,23 +96,23 @@ class GCNNet(torch.nn.Module):
 
 for n in range(1):
 
-    dataset_pubmed_test = Reddit(root="/mnt/ramfs/project_moka/datasets/")
+    dataset_pubmed_test = WikiCS(root="/mnt/ramfs/project_moka/datasets/")
 
 
     # start timer
     start = time.perf_counter()
-    dataset_pubmed1 = Reddit(root="/mnt/NVMe/project_moka/datasets/")
+    dataset_pubmed1 = WikiCS(root="/mnt/NVMe/project_moka/datasets/")
     #dataset_pubmed = Planetoid(root="./pubmed/")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after = time.perf_counter()
 
-    dataset_pubmed2 = Reddit(root="/mnt/ramfs/project_moka/datasets/")
+    dataset_pubmed2 = WikiCS(root="/mnt/ramfs/project_moka/datasets/")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after2 = time.perf_counter()
 
-    dataset_pubmed3 = Reddit(root="/mnt/mem/project_moka/datasets/")
+    dataset_pubmed3 = WikiCS(root="/mnt/mem/project_moka/datasets/")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after3 = time.perf_counter()
