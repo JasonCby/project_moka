@@ -113,17 +113,17 @@ for n in range(1):
     dataset = dataset_pubmed2
     data = dataset[0]  # Get the first graph object.
 
-    from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
-
-    torch.manual_seed(32322)
-    cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
-    train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
-                                 shuffle=True)  # 2. Stochastic partitioning scheme.
-    mid = time.perf_counter()
-    print()
-    total_num_nodes = 0
-    for step, sub_data in enumerate(train_loader):
-        total_num_nodes += sub_data.num_nodes
+    # from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
+    #
+    # torch.manual_seed(32322)
+    # cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
+    # train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
+    #                              shuffle=True)  # 2. Stochastic partitioning scheme.
+    # mid = time.perf_counter()
+    # print()
+    # total_num_nodes = 0
+    # for step, sub_data in enumerate(train_loader):
+    #     total_num_nodes += sub_data.num_nodes
 
     # print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
 
@@ -154,13 +154,13 @@ for n in range(1):
     end = time.perf_counter()
 
     # output duration
-    loader_time = mid - after
+    #loader_time = mid - after
     train_time = end - train_start
     file_reading = after - start
     file_reading2 = after2 - after
     print('Reading time: %s Seconds' % file_reading)
     print('Reading time2: %s Seconds' % file_reading2)
-    print('Loader time: %s Seconds' % loader_time)
+    #print('Loader time: %s Seconds' % loader_time)
     print('Training time: %s Seconds' % train_time)
     #model.eval()
     #_, pred = model(data).max(dim=1)
