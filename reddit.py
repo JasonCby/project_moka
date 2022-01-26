@@ -101,37 +101,37 @@ for n in range(1):
 
     # start timer
     start = time.perf_counter()
-    dataset_pubmed1 = Planetoid(root="/mnt/NVMe/project_moka/datasets/pub", name="Pubmed")
+    #dataset_pubmed1 = Planetoid(root="/mnt/ramfs/project_moka/datasets/pub", name="Pubmed")
     #dataset_pubmed = Planetoid(root="./pubmed/")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after = time.perf_counter()
 
-    dataset_pubmed2 = Planetoid(root="/mnt/NVMe/project_moka/datasets/pub", name="Pubmed")
+    #dataset_pubmed2 = Planetoid(root="/mnt/NVMe/project_moka/datasets/pub", name="Pubmed")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after2 = time.perf_counter()
 
-    dataset_pubmed3 = Planetoid(root="/mnt/NVMe/project_moka/datasets/pub", name="Pubmed")
+    dataset_pubmed3 = Planetoid(root="/mnt/mem/project_moka/datasets/pub", name="Pubmed")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after3 = time.perf_counter()
 
     #dataset = dataset_pubmed
-    dataset = dataset_pubmed2
+    dataset = dataset_pubmed3
     data = dataset[0]  # Get the first graph object.
 
-    # from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
-    #
-    # torch.manual_seed(32322)
-    # cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
-    # train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
-    #                              shuffle=True)  # 2. Stochastic partitioning scheme.
-    # mid = time.perf_counter()
-    # print()
-    # total_num_nodes = 0
-    # for step, sub_data in enumerate(train_loader):
-    #     total_num_nodes += sub_data.num_nodes
+    from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
+
+    torch.manual_seed(32322)
+    cluster_data = ClusterData(data, num_parts=128)  # 1. Create subgraphs.
+    train_loader = ClusterLoader(cluster_data, batch_size=batch_size,
+                                 shuffle=True)  # 2. Stochastic partitioning scheme.
+    mid = time.perf_counter()
+    print()
+    total_num_nodes = 0
+    for step, sub_data in enumerate(train_loader):
+        total_num_nodes += sub_data.num_nodes
 
     # print(f'Iterated over {total_num_nodes} of {data.num_nodes} nodes!')
 
@@ -147,18 +147,18 @@ for n in range(1):
     model.train()
 
     train_start = time.perf_counter()
-    ###
-    # for epoch in range(epoch_num):
-    #     batch_round = 0
-    #     for train_data in train_loader:
-    #         batch_round += 1
-    #         data = train_data.to(device)
-    #         optimizer.zero_grad()
-    #         out = model(data)
-    #         loss = F.nll_loss(out[data.train_mask], data.y[data.train_mask])
-    #         loss.backward()
-    #         optimizer.step()
-    ###
+    ##
+    for epoch in range(epoch_num):
+        batch_round = 0
+        for train_data in train_loader:
+            batch_round += 1
+            data = train_data.to(device)
+            optimizer.zero_grad()
+            out = model(data)
+            loss = F.nll_loss(out[data.train_mask], data.y[data.train_mask])
+            loss.backward()
+            optimizer.step()
+    ##
     end = time.perf_counter()
 
     # output duration
