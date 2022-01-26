@@ -96,7 +96,7 @@ class GCNNet(torch.nn.Module):
 
 for n in range(1):
 
-    dataset_pubmed_test = Planetoid(root="/mnt/ramfs/project_moka/datasets/")
+    dataset_pubmed_test = Planetoid(root="/mnt/NVMe/project_moka/datasets/pub", name="Pubmed")
 
 
     # start timer
