@@ -96,6 +96,9 @@ class GCNNet(torch.nn.Module):
 
 for n in range(1):
 
+    dataset_pubmed_test = AmazonProducts(root="/mnt/ramfs/project_moka/datasets/")
+
+
     # start timer
     start = time.perf_counter()
     dataset_pubmed1 = AmazonProducts(root="/mnt/NVMe/project_moka/datasets/")
@@ -104,7 +107,7 @@ for n in range(1):
     # start timer
     after = time.perf_counter()
 
-    dataset_pubmed2 = AmazonProducts(root="/mnt/NVMe/project_moka/datasets/")
+    dataset_pubmed2 = AmazonProducts(root="/mnt/ramfs/project_moka/datasets/")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after2 = time.perf_counter()
