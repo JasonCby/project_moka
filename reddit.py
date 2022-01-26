@@ -139,16 +139,18 @@ for n in range(1):
     model.train()
 
     train_start = time.perf_counter()
-    for epoch in range(epoch_num):
-        batch_round = 0
-        for train_data in train_loader:
-            batch_round += 1
-            data = train_data.to(device)
-            optimizer.zero_grad()
-            out = model(data)
-            loss = F.nll_loss(out[data.train_mask], data.y[data.train_mask])
-            loss.backward()
-            optimizer.step()
+    ###
+    # for epoch in range(epoch_num):
+    #     batch_round = 0
+    #     for train_data in train_loader:
+    #         batch_round += 1
+    #         data = train_data.to(device)
+    #         optimizer.zero_grad()
+    #         out = model(data)
+    #         loss = F.nll_loss(out[data.train_mask], data.y[data.train_mask])
+    #         loss.backward()
+    #         optimizer.step()
+    ###
     end = time.perf_counter()
 
     # output duration
