@@ -96,7 +96,7 @@ class GCNNet(torch.nn.Module):
 
 for n in range(1):
 
-    dataset_pubmed_test = Planetoid(root="/mnt/NVMe/project_moka/datasets/pub", name="Pubmed")
+    #dataset_pubmed_test = Planetoid(root="/mnt/NVMe/project_moka/datasets/pub", name="Pubmed")
 
 
     # start timer
@@ -163,6 +163,7 @@ for n in range(1):
 
     # output duration
     #loader_time = mid - after
+    total_time_e_e = end - start
     train_time = end - train_start
     file_reading = after - start
     file_reading2 = after2 - after
@@ -171,6 +172,7 @@ for n in range(1):
     print('Reading time2: %s Seconds' % file_reading2)
     print('Reading time3: %s Seconds' % file_reading3)
     print('Training time: %s Seconds' % train_time)
+    print('Total time: %s Seconds' % total_time_e_e)
     #model.eval()
     #_, pred = model(data).max(dim=1)
     #correct = int(pred[data.test_mask].eq(data.y[data.test_mask]).sum().item())
