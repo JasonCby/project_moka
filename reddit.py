@@ -112,6 +112,11 @@ for n in range(1):
     # start timer
     after2 = time.perf_counter()
 
+    dataset_pubmed3 = Reddit(root="/mnt/mem/project_moka/datasets/")
+    #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
+    # start timer
+    after3 = time.perf_counter()
+
     #dataset = dataset_pubmed
     dataset = dataset_pubmed2
     data = dataset[0]  # Get the first graph object.
@@ -161,9 +166,10 @@ for n in range(1):
     train_time = end - train_start
     file_reading = after - start
     file_reading2 = after2 - after
-    print('Reading time: %s Seconds' % file_reading)
+    file_reading3 = after3 - after2
+    print('Reading time1: %s Seconds' % file_reading)
     print('Reading time2: %s Seconds' % file_reading2)
-    #print('Loader time: %s Seconds' % loader_time)
+    print('Reading time3: %s Seconds' % file_reading3)
     print('Training time: %s Seconds' % train_time)
     #model.eval()
     #_, pred = model(data).max(dim=1)
