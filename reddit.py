@@ -112,7 +112,7 @@ for n in range(1):
     # start timer
     after2 = time.perf_counter()
 
-    dataset_pubmed3 = Planetoid(root="/mnt/mem/project_moka/datasets/pub/test", name="Pubmed")
+    dataset_pubmed3 = Planetoid(root="/mnt/mem/project_moka/datasets/pub/test/p", name="Pubmed")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after3 = time.perf_counter()
