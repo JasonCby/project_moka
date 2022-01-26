@@ -99,18 +99,18 @@ for n in range(1):
     # start timer
     start = time.perf_counter()
 
-    dataset_pubmed = Planetoid(root="./pubmed/", name='Pubmed')
+    #dataset_pubmed = Planetoid(root="./pubmed/")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after = time.perf_counter()
 
-    dataset_pubmed2 = Planetoid(root="/mnt/NVme/project_moka/pubmed/", name="Pubmed")
+    dataset_pubmed2 = Reddit(root="/mnt/NVme/project_moka/datasets/")
     #dataset_Cora = Planetoid(root=path_Cora, name='Cora', split="random")
     # start timer
     after2 = time.perf_counter()
 
     #dataset = dataset_pubmed
-    dataset = dataset_pubmed
+    dataset = dataset_pubmed2
     data = dataset[0]  # Get the first graph object.
 
     from torch_geometric.data import ClusterData, ClusterLoader, DataLoader
